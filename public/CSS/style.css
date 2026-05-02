@@ -1,0 +1,477 @@
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+}
+
+/* NAVBAR */
+.navbar {
+  height: 5rem;
+  padding: 0 2rem;
+}
+
+/* LOGO */
+.fa-compass {
+  color: #fe424d;
+  font-size: 2rem;
+}
+
+/* BRAND */
+.navbar-brand {
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+}
+
+/* LINKS */
+.nav-link {
+  color: #222 !important;
+  margin-right: 1rem;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #fe424d !important;
+}
+
+/* USERNAME */
+.navbar .text-primary {
+  margin-right: 1rem;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 1rem;
+  }
+
+  .nav-link {
+    margin-right: 0;
+    padding: 0.5rem 0;
+  }
+}
+
+  
+/* CARDS */
+.listing-card {
+  border: none !important;
+  margin-bottom: 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* IMAGE */
+.card-img-top {
+  border-radius: 1rem !important;
+  width: 100% !important;
+  height: 18rem;
+  object-fit: cover !important;
+  transition: transform 0.4s ease;
+}
+
+/* BODY */
+.card-body {
+  padding: 0.5rem 0.2rem !important;
+}
+
+/* LINK RESET */
+.listing-link {
+  text-decoration: none;
+  color: #222;
+}
+
+/* HOVER EFFECT (MAIN MAGIC ✨) */
+.listing-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* IMAGE ZOOM */
+.listing-card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+/* OVERLAY */
+.card-img-overlay {
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.listing-card:hover .card-img-overlay {
+  opacity: 0.15;
+  background-color: white;
+}
+
+/* TEXT */
+.card-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.card-text b {
+  font-size: 1rem;
+}
+
+/* PRICE STYLE */
+.card-text span {
+  color: #717171;
+  font-size: 0.85rem;
+}
+
+/* add button */
+
+.add-btn{
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* edit button */
+
+.edit-btn{
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* show page */
+.show-img{
+    height: 30vh;
+}
+.btns{
+    display: flex;
+}
+.show-card{
+    padding-left: 0%;
+    padding-right: 0%;
+}
+/* FOOTER */
+.f-info {
+  text-align: center;
+  height: auto;
+  background-color: #ebebeb;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  gap: 1rem;
+}
+
+/* LINKS */
+.f-info-links {
+  width: 100%;
+}
+
+.f-info-links a {
+  text-decoration: none;
+  color: #222;
+  margin: 0 0.5rem;
+  font-size: 0.9rem;
+}
+
+.f-info-links a:hover {
+  text-decoration: underline;
+  color: #fe424d;
+}
+
+/* SOCIAL ICONS */
+.f-info-socials {
+  width: 100%;
+  font-size: 1.3rem;
+}
+
+.f-info-socials i {
+  margin: 0 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.f-info-socials i:hover {
+  color: #fe424d;
+  transform: scale(1.2);
+}
+
+/* COPYRIGHT */
+.f-info-brand {
+  width: 100%;
+  font-size: 0.85rem;
+  color: #555;
+}
+/* map */
+
+#map { 
+    height: 400px;
+    width: 80vh;
+}
+
+/* FORM CONTAINER */
+.row {
+  margin-top: 2rem;
+}
+
+.col-8 {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* HEADING */
+h3 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+/* INPUT FIELDS */
+.form-control {
+  border-radius: 0.7rem !important;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ccc;
+  transition: all 0.2s ease;
+}
+
+/* INPUT FOCUS EFFECT */
+.form-control:focus {
+  border-color: #fe424d;
+  box-shadow: 0 0 0 0.2rem rgba(254, 66, 77, 0.2);
+}
+
+/* LABEL */
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+/* FILE INPUT */
+input[type="file"] {
+  padding: 0.4rem;
+}
+
+/* BUTTON */
+.add-btn {
+  background-color: #fe424d !important;
+  border: none !important;
+  border-radius: 2rem !important;
+  padding: 0.6rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* BUTTON HOVER */
+.add-btn:hover {
+  background-color: #e63946 !important;
+  transform: scale(1.05);
+}
+
+/* VALIDATION */
+.valid-feedback {
+  font-size: 0.8rem;
+}
+
+.invalid-feedback {
+  font-size: 0.8rem;
+}
+
+
+
+/* IMAGE */
+.show-img {
+  height: 22rem;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+/* TEXT */
+.owner-text {
+  color: #555;
+}
+
+.show-desc {
+  margin-top: 0.5rem;
+}
+
+.show-price {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.show-location {
+  color: #666;
+}
+
+/* MAP */
+#map {
+  height: 400px;
+  width: 100%;
+  border-radius: 1rem;
+  margin-top: 1rem;
+}
+
+/* CARD */
+.show-card {
+  border: none;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.edit-img {
+  width: 100%;
+  height: 250px;   /* fixed height */
+  object-fit: cover;
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+
+/* REVIEW FORM */
+.review-form {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.review-form h4 {
+  margin-bottom: 1rem;
+}
+
+/* STAR RATING */
+.starability-slot label {
+  cursor: pointer;
+}
+
+/* TEXTAREA */
+.review-form textarea {
+  border-radius: 0.7rem;
+  resize: none;
+}
+
+.review-form textarea:focus {
+  border-color: #fe424d;
+  box-shadow: 0 0 0 0.2rem rgba(254,66,77,0.2);
+}
+
+/* BUTTON */
+.review-form button {
+  border-radius: 2rem;
+  padding: 0.5rem 1.2rem;
+  background-color: #fe424d;
+  border: none;
+}
+
+.review-form button:hover {
+  background-color: #e63946;
+}
+
+/* REVIEW CARDS */
+.review-card {
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* USER */
+.review-user {
+  font-weight: 600;
+}
+
+/* RATING */
+.review-rating {
+  color: #fe424d;
+  font-size: 0.9rem;
+}
+
+/* COMMENT */
+.review-comment {
+  font-size: 0.9rem;
+  color: #444;
+}
+
+/* DELETE BTN */
+.review-delete {
+  font-size: 0.75rem;
+  border-radius: 1rem;
+  padding: 0.2rem 0.7rem;
+}
+
+
+/* SEARCH CONTAINER */
+.search-box {
+  background: #fff;
+  border-radius: 2rem;
+  padding: 0.3rem 0.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  max-width: 400px;
+  
+
+  
+}
+
+/* INPUT */
+.search-box input {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  border-radius: 2rem;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.9rem;
+  
+}
+
+/* BUTTON */
+.search-box button {
+  border-radius: 50%;
+  background-color: #fe424d;
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  
+}
+
+/* HOVER EFFECT */
+.search-box button:hover {
+  background-color: #e63946;
+  transform: scale(1.05);
+}
+
+.search-box:focus-within {
+  box-shadow: 0 0 0 3px rgba(254,66,77,0.2);
+}
+
+.search-box input {
+  transition: width 0.3s ease;
+  width: 120px;
+}
+
+.search-box input:focus {
+  width: 200px;
+}
+
+
+.navbar-collapse {
+  position: relative;
+}
+
+.navbar-collapse .mx-auto {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}

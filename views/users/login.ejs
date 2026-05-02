@@ -1,0 +1,89 @@
+<%layout("layouts/boilerplate") %>
+<style>
+    /* PAGE BACKGROUND */
+body {
+  background: #f7f7f7;
+}
+
+/* LOGIN CARD */
+.card {
+  border: none;
+  border-radius: 1rem;
+  
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* TITLE */
+.card-title {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+/* INPUT */
+.form-control {
+  border-radius: 0.7rem !important;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #fe424d;
+  box-shadow: 0 0 0 0.2rem rgba(254,66,77,0.2);
+}
+
+/* BUTTON */
+.btn-primary {
+  width: 100%;
+  border-radius: 2rem;
+  background-color: #fe424d;
+  border: none;
+  padding: 0.6rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #e63946;
+  transform: scale(1.03);
+}
+
+/* SIGNUP TEXT */
+.card p {
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.card a {
+  color: #fe424d;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+</style>
+<div class="row">
+    <div class="col-md-6 offset-md-3 mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Log In</h5>
+                <form action="/users/login" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label" for="username">Username</label>
+                        <input class="form-control" type="text" id="username" name="username" placeholder="enter username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-control" type="password" id="password" name="password" placeholder="enter password" required>
+                    </div>
+                    <button class="btn btn-primary">Log In</button>
+                </form>
+                <p class="mt-3">Don't have an account? <a href="/users/signup">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+</div>

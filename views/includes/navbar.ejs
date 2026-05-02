@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-md navbar-light bg-white sticky-top shadow-sm">
+  <div class="container-fluid">
+
+    <a class="navbar-brand fw-bold" href="/">
+      <i class="fa-regular fa-compass"></i> WanderLust
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+      <!-- LEFT -->
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+      <div class="search-box">
+        <form class="d-flex w-100" role="search" onsubmit="return false;">
+           <input id="searchInput"
+           class="form-control me-2" 
+           type="search" 
+           placeholder="Search destinations..." 
+           />
+           <button type="submit">
+             🔍
+           </button>
+        </form>
+      </div>
+      <!-- RIGHT -->
+      <div class="navbar-nav ms-auto align-items-center">
+
+        <a class="nav-link" href="/listings/new">Airbnb your home</a>
+
+        <% if(!currentUser) { %>
+          <a class="nav-link fw-semibold" href="/users/signup">Sign Up</a>
+          <a class="nav-link fw-semibold" href="/users/login">Log In</a>
+        <% } else { %>
+          <span class="nav-link fw-semibold text-primary">
+            👤 <%= currentUser.username %>
+          </span>
+          <a class="nav-link fw-semibold text-danger" href="/users/logout">Logout</a>
+        <% } %>
+
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<script>
+
+  let searchInput = document.getElementById("searchInput");
+
+  searchInput.addEventListener("input", () => {
+    let query = searchInput.value.toLowerCase();
+    let cards = document.querySelectorAll(".listing-card");
+
+    cards.forEach(card => {
+      let title = card.getAttribute("data-title");
+
+      if (title.includes(query)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  });
+
+</script>
