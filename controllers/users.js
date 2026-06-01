@@ -37,13 +37,13 @@ module.exports.login = async (req, res) => {
 };
 
 
-module.exports.logout = async (req, res) => {
+module.exports.logout = (req, res, next) => {
     req.logout(function(err) {
-        if (err) { 
+        if (err) {
             return next(err);
         }
-      }  
-    );
-    req.flash("success", "You have been logged out!");
-    res.redirect("/listings");
-}; 
+
+        req.flash("success", "You have been logged out!");
+        res.redirect("/listings");
+    });
+};

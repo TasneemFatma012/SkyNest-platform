@@ -20,7 +20,7 @@ router.route("/login")
 .post(savedRedirectUrl, passport.authenticate("local", { failureFlash: true, failureRedirect: "/users/login" }), 
 userController.login);
 
-router.get("/logout", userController.logout);
+router.post("/logout", userController.logout);
 
 
 module.exports = router;
