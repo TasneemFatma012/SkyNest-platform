@@ -1,70 +1,62 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white sticky-top shadow-sm">
-  <div class="container-fluid">
+<!-- views/includes/navbar.ejs -->
+<!-- NOTE: Navbar is already inside boilerplate.ejs
+     Yeh file ab sirf backup ke liye hai.
+     Agar aap alag navbar include use karte ho toh yeh paste karo: -->
 
-    <a class="navbar-brand fw-bold" href="/">
-      <i class="fa-regular fa-compass"></i> WanderLust
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid px-0">
+
+    <a class="navbar-brand ms-0" href="/listings">
+      Wander<span class="brand-accent">Lust</span>
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      style="border-color:var(--border)"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center gap-1">
 
-      <!-- LEFT -->
-      <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Explore</a>
-      </div>
-      <div class="search-box">
-        <form class="d-flex w-100" role="search" onsubmit="return false;">
-           <input id="searchInput"
-           class="form-control me-2" 
-           type="search" 
-           placeholder="Search destinations..." 
-           />
-           <button type="submit">
-             🔍
-           </button>
-        </form>
-      </div>
-      <!-- RIGHT -->
-      <div class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link" href="/listings">Explore</a>
+        </li>
 
-        <a class="nav-link" href="/listings/new">Airbnb your home</a>
-
-        <% if(!currentUser) { %>
-          <a class="nav-link fw-semibold" href="/users/signup">Sign Up</a>
-          <a class="nav-link fw-semibold" href="/users/login">Log In</a>
+        <% if(currUser) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/listings/new">+ New Listing</a>
+          </li>
+          <li class="nav-item">
+            <form action="/users/logout" method="POST" class="m-0">
+              <button type="submit"
+                class="nav-link btn btn-link p-0"
+                style="font-size:0.72rem;letter-spacing:0.5px;text-transform:uppercase;color:var(--muted);">
+                Logout
+              </button>
+            </form>
+          </li>
+          <li class="nav-item ms-1">
+            <span class="nav-link" style="color:var(--ink);font-weight:600;">
+              <i class="ti ti-user-circle" style="font-size:1rem;vertical-align:middle;"></i>
+              &nbsp;<%= currUser.username %>
+            </span>
+          </li>
         <% } else { %>
-          <span class="nav-link fw-semibold text-primary">
-            👤 <%= currentUser.username %>
-          </span>
-          <a class="nav-link fw-semibold text-danger" href="/users/logout">Logout</a>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/signup">Sign up</a>
+          </li>
+          <li class="nav-item ms-1">
+            <a class="btn-nav-cta" href="/users/login">Log in</a>
+          </li>
         <% } %>
 
-      </div>
-
+      </ul>
     </div>
+
   </div>
 </nav>
-
-<script>
-
-  let searchInput = document.getElementById("searchInput");
-
-  searchInput.addEventListener("input", () => {
-    let query = searchInput.value.toLowerCase();
-    let cards = document.querySelectorAll(".listing-card");
-
-    cards.forEach(card => {
-      let title = card.getAttribute("data-title");
-
-      if (title.includes(query)) {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
-      }
-    });
-  });
-
-</script>

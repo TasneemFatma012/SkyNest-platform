@@ -1,14 +1,17 @@
-<% if(success && success.length > 0) { %> 
+<!-- views/includes/flash.ejs -->
 
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <%= success %>
+<% if(success && success.length > 0) { %>
+  <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+    <i class="ti ti-circle-check" style="vertical-align:middle;margin-right:6px;"></i>
+    <%= success %>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+  </div>
 <% } %>
 
 <% if(error && error.length > 0) { %>
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-  <%= error %>
+  <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+    <i class="ti ti-alert-circle" style="vertical-align:middle;margin-right:6px;"></i>
+    <%= error %>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-<% } %> 
+  </div>
+<% } %>

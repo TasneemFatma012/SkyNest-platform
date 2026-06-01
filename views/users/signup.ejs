@@ -1,97 +1,83 @@
-<%layout("layouts/boilerplate") %>
-<style>
-    /* PAGE BACKGROUND */
-body {
-  background: #f7f7f7;
-}
+<%- layout("layouts/boilerplate") %>
 
-/* LOGIN CARD */
-.card {
-  border: none;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
+<div class="form-page">
 
-/* TITLE */
-.card-title {
-  text-align: center;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-}
+  <div class="form-page-title">Join WanderLust</div>
+  <div class="form-page-sub">
+    Create your free account and start exploring — or hosting.
+  </div>
 
-/* INPUT */
-.form-control {
-  border-radius: 0.7rem !important;
-  padding: 0.6rem;
-  border: 1px solid #ccc;
-  transition: all 0.2s ease;
-}
+  <div class="form-card">
+    <form
+      method="POST"
+      action="/users/signup"
+      novalidate
+      class="needs-validation"
+    >
 
-.form-control:focus {
-  border-color: #fe424d;
-  box-shadow: 0 0 0 0.2rem rgba(254,66,77,0.2);
-}
+      <!-- Username -->
+      <div class="mb-3">
+        <label class="form-label" for="username">
+          <i class="ti ti-user" style="vertical-align:middle;margin-right:4px;"></i>
+          Username
+        </label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          class="form-control"
+          placeholder="e.g. travellerrahul"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Username is required.</div>
+      </div>
 
-/* BUTTON */
-.btn-primary {
-  width: 100%;
-  border-radius: 2rem;
-  background-color: #fe424d;
-  border: none;
-  padding: 0.6rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label" for="email">
+          <i class="ti ti-mail" style="vertical-align:middle;margin-right:4px;"></i>
+          Email
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          class="form-control"
+          placeholder="e.g. rahul@email.com"
+          required
+        />
+        <div class="invalid-feedback">Enter a valid email.</div>
+      </div>
 
-.btn-primary:hover {
-  background-color: #e63946;
-  transform: scale(1.03);
-}
+      <!-- Password -->
+      <div class="mb-4">
+        <label class="form-label" for="password">
+          <i class="ti ti-lock" style="vertical-align:middle;margin-right:4px;"></i>
+          Password
+        </label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          class="form-control"
+          placeholder="Min. 6 characters"
+          required
+          minlength="6"
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Password must be at least 6 characters.</div>
+      </div>
 
-/* SIGNUP TEXT */
-.card p {
-  text-align: center;
-  font-size: 0.9rem;
-}
+      <button type="submit" class="add-btn btn w-100">
+        Create Account
+      </button>
 
-.card a {
-  color: #fe424d;
-  font-weight: 500;
-  text-decoration: none;
-}
+    </form>
+  </div>
 
-.card a:hover {
-  text-decoration: underline;
-}
-</style>
-<div class="row">
-    <div class="col-8 offset-2 mt-3">
-        <h3>SignUp on Wanderlust</h3>
-        <form method="POST" action="/users/signup" novalidate class="needs-validation">
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input name="username" placeholder="enter username" type="text" class="form-control" required/>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
-            </div>
+  <div class="form-link mt-3">
+    Already have an account? <a href="/users/login">Log in</a>
+  </div>
 
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input name="email" placeholder="enter email" type="email" class="form-control" required/>
-                
-            </div>
-
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input name="password" placeholder="enter password" type="password" class="form-control" required/>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Sign Up</button>
-        </form>
-    </div>
 </div>

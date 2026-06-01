@@ -16,6 +16,7 @@ const { validateListing, validateReview } = require("./middleware.js");
 const listingRoutes = require("./routes/listing.js");
 const reviewRoutes = require("./routes/review.js");
 const userRoutes = require("./routes/user.js");
+const chatRoutes = require("./routes/chat.js");
 const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
 
@@ -33,10 +34,12 @@ app.locals.MAP_TOKEN = process.env.MAP_TOKEN;
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(methodOverride("_method"));
 app.engine('ejs',ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
-
+app.use('/vendor/tabler-icons', express.static(path.join(__dirname, 'node_modules/@tabler/icons-webfont/dist')));
+app.use('/vendor/fontawesome', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')));
 
 const dbUrl = process.env.ATLASDB_URL;
 
@@ -91,7 +94,8 @@ app.use((req,res,next) => {
   res.locals.success = req.flash("success");
   console.log(res.locals.success);
   res.locals.error = req.flash("error");
-  res.locals.currentUser = req.user;
+  res.locals.currentUser = req.user || null;
+  res.locals.currUser = req.user || null;
   next();
 });
 
@@ -107,6 +111,11 @@ app.get("/login", (req, res) => {
 app.use("/users", userRoutes);
 app.use("/listings/:id/reviews", reviewRoutes);
 app.use("/listings", listingRoutes);
+app.use("/chat", chatRoutes);
+
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
 
 app.use((req,res,next) => {
   next(new ExpressError(404,"Page Not Found"));
