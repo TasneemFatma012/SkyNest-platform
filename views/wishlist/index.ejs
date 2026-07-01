@@ -1,0 +1,66 @@
+<%- layout("layouts/boilerplate") %>
+
+<div class="container mt-4">
+
+  <h2 class="mb-4">My Wishlist ❤️</h2>
+
+  <% if(items.length === 0){ %>
+
+    <div class="alert alert-info">
+      No wishlist items found.
+    </div>
+
+  <% } else { %>
+
+    <div class="row">
+
+      <% items.forEach(item => { %>
+
+        <div class="col-md-4 mb-4">
+
+          <div class="card shadow-sm">
+
+            <img
+              src="<%= item.listing.image.url %>"
+              class="card-img-top"
+              style="height:220px;object-fit:cover;"
+            >
+
+            <div class="card-body">
+
+              <h5>
+                <%= item.listing.title %>
+              </h5>
+
+              <p>
+                📍 <%= item.listing.location %>,
+                <%= item.listing.country %>
+              </p>
+
+              <a
+                href="/listings/<%= item.listing._id %>"
+                class="btn btn-dark"
+              >
+                View Listing
+              </a>
+
+
+            </div><form
+  action="/wishlist/<%= item._id %>?_method=DELETE"
+  method="POST">
+  <button class="cancel-btn">
+    Remove
+  </button>
+</form>
+
+          </div>
+
+        </div>
+
+      <% }) %>
+
+    </div>
+
+  <% } %>
+
+</div>

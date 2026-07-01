@@ -60,3 +60,11 @@ module.exports.isOwner = async (req, res, next) => {
 
   next();
 };
+
+
+module.exports.isHost =(req, res, next) => {
+  if (!req.user || req.user.role !== "host") {
+    return res.status(403).send("Only hosts allowed");
+  }
+  next();
+}

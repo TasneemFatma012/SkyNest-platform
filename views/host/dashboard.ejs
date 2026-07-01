@@ -1,0 +1,356 @@
+<%- layout("layouts/boilerplate") %>
+
+<div class="host-dashboard">
+
+  <div class="dashboard-header">
+    <div>
+      <h1>Host Dashboard</h1>
+      <p>Manage your listings and bookings</p>
+    </div>
+
+    <a href="/listings/new" class="dashboard-btn">
+      + Add Listing
+    </a>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <h2><%= totalListings %></h2>
+      <p>Total Listings</p>
+    </div>
+
+    <div class="stat-card">
+      <h2><%= totalBookings %></h2>
+      <p>Total Bookings</p>
+    </div>
+
+    <div class="stat-card">
+      <h2>₹<%= revenue %></h2>
+      <p>Total Revenue</p>
+    </div>
+
+    <div class="stat-card">
+      <h2>92%</h2>
+      <p>Occupancy</p>
+    </div>
+
+  </div>
+
+  <!-- Charts -->
+  <div class="charts-grid">
+
+    <div class="chart-card">
+      <h3>Revenue Trend</h3>
+      <canvas id="revenueChart"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3>Bookings Trend</h3>
+      <canvas id="bookingChart"></canvas>
+    </div>
+
+  </div>
+
+  <!-- Listings -->
+  <div class="dashboard-section">
+    <h3>Your Listings</h3>
+
+    <table class="listing-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% listings.forEach(listing => { %>
+          <tr>
+            <td><%= listing.title %></td>
+            <td>₹<%= listing.price %></td>
+            <td>Active</td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+  </div>
+  <!-- Calendar + Block Dates -->
+<div class="dashboard-section mt-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+
+    <h3>📅 Calendar Booking View</h3>
+
+    <button
+      class="dashboard-btn"
+      data-bs-toggle="modal"
+      data-bs-target="#blockDateModal"
+    >
+      🚫 Block Dates
+    </button>
+
+  </div>
+
+  <div id="calendar"></div>
+
+</div>
+
+<!-- Block Date Modal -->
+<div
+  class="modal fade"
+  id="blockDateModal"
+  tabindex="-1"
+>
+
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Block Dates
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+
+        <form
+          action="/host/block-date"
+          method="POST"
+        >
+
+          <label class="mb-2">
+            Select Listing
+          </label>
+
+          <select
+            name="listingId"
+            class="form-control mb-3"
+            required
+          >
+
+            <% listings.forEach(listing => { %>
+
+              <option value="<%= listing._id %>">
+                <%= listing.title %>
+              </option>
+
+            <% }) %>
+
+          </select>
+
+          <label class="mb-2">
+            Select Date
+          </label>
+
+          <input
+            type="date"
+            name="date"
+            class="form-control mb-3"
+            required
+          >
+
+          <button
+            type="submit"
+            class="dashboard-btn w-100"
+          >
+            Save Block Date
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+<!-- Revenue Per Listing -->
+<div class="dashboard-section mt-4">
+  <h3>📈 Revenue Per Listing</h3>
+
+  <table class="listing-table">
+    <thead>
+      <tr>
+        <th>Listing</th>
+        <th>Bookings</th>
+        <th>Revenue</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% listings.forEach(listing => { %>
+        <tr>
+          <td><%= listing.title %></td>
+          <td><%= listingRevenue[listing._id]?.bookings || 0 %></td>
+          <td>₹<%= listingRevenue[listing._id]?.revenue || 0 %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<!-- Analytics Row -->
+<div class="stats-grid mt-4">
+
+  <div class="stat-card">
+    <h2><%= conversionRate %>%</h2>
+    <p>📊 Conversion Rate</p>
+  </div>
+
+  <div class="stat-card">
+    <h2><%= cancelledBookings %></h2>
+    <p>❌ Cancelled Bookings</p>
+  </div>
+
+  <div class="stat-card">
+    <h2><%= notifications.length %></h2>
+    <p>🔔 Notifications</p>
+  </div>
+
+  <div class="stat-card">
+    <h2>+12%</h2>
+    <p>🤖 AI Pricing Boost</p>
+  </div>
+
+</div>
+
+<!-- Notifications -->
+<div class="dashboard-section mt-4">
+  <h3>🔔 Notifications</h3>
+
+  <% if(notifications.length > 0){ %>
+
+    <% notifications.forEach(notification => { %>
+
+      <div class="notification-item">
+        <%= notification.message %>
+      </div>
+
+    <% }) %>
+
+  <% } else { %>
+
+    <div class="notification-item">
+      No notifications yet
+    </div>
+
+  <% } %>
+
+</div>
+
+<div class="dashboard-section mt-4">
+  <h3>🗺️ Location Unlock Status</h3>
+
+  <% listings.forEach(listing => { %>
+
+    <div class="location-card mb-2">
+      <strong><%= listing.title %></strong><br>
+
+      <% if(listingRevenue[listing._id]?.bookings > 0) { %>
+        ✅ Location unlocked for booked guests
+      <% } else { %>
+        🔒 No confirmed bookings yet
+      <% } %>
+    </div>
+
+  <% }) %>
+</div>
+
+<!-- Export Revenue -->
+<div class="dashboard-section mt-4">
+  <h3>📥 Revenue Export</h3>
+
+  <button class="dashboard-btn">
+    Download CSV Report
+  </button>
+</div>
+
+<!-- AI Pricing -->
+<div class="dashboard-section mt-4">
+  <h3>🤖 AI Pricing Suggestions</h3>
+
+  <div class="pricing-card">
+    <p>
+      Current Price: ₹<%= listings[0]?.price || 0 %>
+    </p>
+
+    <p>
+      Suggested Price: ₹2500
+    </p>
+
+    <p>
+      Expected Revenue Increase: +15%
+    </p>
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+<script>
+new Chart(document.getElementById("revenueChart"), {
+  type: "line",
+  data: {
+    labels: ["Jan","Feb","Mar","Apr","May","Jun"],
+    datasets: [{
+      label: "Revenue",
+      data: [10000,15000,22000,18000,27000,35000]
+    }]
+  }
+});
+
+new Chart(document.getElementById("bookingChart"), {
+  type: "bar",
+  data: {
+    labels: ["Jan","Feb","Mar","Apr","May","Jun"],
+    datasets: [{
+      label: "Bookings",
+      data: [2,4,6,5,8,10]
+    }]
+  }
+});
+
+
+const events =
+<%- JSON.stringify(calendarEvents) %>;
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const calendarEl =
+    document.getElementById("calendar");
+
+  const calendar =
+    new FullCalendar.Calendar(calendarEl, {
+
+      initialView: "dayGridMonth",
+
+      height: 700,
+
+      events: events
+
+    });
+
+  calendar.render();
+
+});
+
+
+</script>
+

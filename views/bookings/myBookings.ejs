@@ -1,0 +1,106 @@
+<%- layout("layouts/boilerplate") %>
+
+<div class="container mt-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="my-bookings-title">My Bookings</h2>
+
+    <span class="booking-count">
+      <%= bookings.length %> Bookings
+    </span>
+  </div>
+
+  <% if(bookings.length === 0){ %>
+
+    <div class="alert alert-light border">
+      No bookings found.
+    </div>
+
+  <% } else { %>
+
+    <div class="row g-4">
+
+      <% bookings.forEach(booking => { %>
+
+        <div class="col-md-4">
+
+          <div class="booking-card">
+
+            <img
+              src="<%= booking.listing.image.url %>"
+              class="booking-img"
+              alt="<%= booking.listing.title %>"
+            >
+
+            <div class="booking-content">
+
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="booking-title">
+                  <%= booking.listing.title %>
+                </h5>
+
+                <span class="booking-status">
+                  Confirmed
+                </span>
+              </div>
+
+              <p class="booking-location">
+                📍 <%= booking.listing.location %>,
+                <%= booking.listing.country %>
+              </p>
+
+              <div class="booking-info">
+
+                <p>
+                  <strong>Check In:</strong>
+                  <%= booking.checkIn.toDateString() %>
+                </p>
+
+                <p>
+                  <strong>Check Out:</strong>
+                  <%= booking.checkOut.toDateString() %>
+                </p>
+
+                <p>
+                  <strong>Guests:</strong>
+                  <%= booking.guests %>
+                </p>
+                <p>
+                   <strong>Total:</strong>
+                   <% if(booking.totalPrice){ %>
+                   ₹<%= booking.totalPrice.toLocaleString("en-IN") %>
+                   <% } else { %>
+                     N/A
+                   <% } %>
+                 </p>
+
+              </div>
+
+              <a
+                href="/listings/<%= booking.listing._id %>"
+                class="booking-btn text-center text-decoration-none d-block"
+              >
+                View Listing
+              </a>
+              <form
+                action="/bookings/<%= booking._id %>?_method=DELETE"
+                method="POST"
+                >
+                <button class="cancel-btn">
+                   Cancel Booking
+               </button>
+            </form>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      <% }) %>
+
+    </div>
+
+  <% } %>
+
+</div>

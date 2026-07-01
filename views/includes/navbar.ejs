@@ -1,15 +1,13 @@
-<!-- views/includes/navbar.ejs -->
-<!-- NOTE: Navbar is already inside boilerplate.ejs
-     Yeh file ab sirf backup ke liye hai.
-     Agar aap alag navbar include use karte ho toh yeh paste karo: -->
-
+<!-- ── NAVBAR ── -->
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid px-0">
 
+    <!-- Brand -->
     <a class="navbar-brand ms-0" href="/listings">
       Wander<span class="brand-accent">Lust</span>
     </a>
 
+    <!-- Mobile toggler -->
     <button
       class="navbar-toggler"
       type="button"
@@ -20,39 +18,118 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
+    <!-- Links -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto align-items-center gap-1">
 
+        <!-- COMMON LINKS -->
         <li class="nav-item">
           <a class="nav-link" href="/listings">Explore</a>
         </li>
 
+        <li class="nav-item">
+          <a class="nav-link" href="/chat">Chat</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/wishlist">Wishlist</a>
+        </li>
+
         <% if(currUser) { %>
+
+          <!-- ALL LOGGED-IN USERS -->
           <li class="nav-item">
-            <a class="nav-link" href="/listings/new">+ New Listing</a>
+            <a class="nav-link" href="/bookings/my/bookings">
+              My Booking
+            </a>
           </li>
+
+          <!-- HOST ONLY -->
+          <% if(currUser.role === "host") { %>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/listings/new">
+                + New Listing
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/host/dashboard">
+                Host Dashboard
+              </a>
+            </li>
+
+          <% } %>
+
+          <!-- NORMAL USER ONLY -->
+          <% if(currUser.role === "user") { %>
+
+            <li class="nav-item">
+              <form action="/users/become-host" method="POST" class="m-0">
+                <button
+                  type="submit"
+                  class="nav-link btn btn-link p-0"
+                  style="
+                    font-size:0.72rem;
+                    letter-spacing:0.5px;
+                    text-transform:uppercase;
+                    color:var(--muted);
+                  "
+                >
+                  Become a Host
+                </button>
+              </form>
+            </li>
+
+          <% } %>
+
+          <!-- LOGOUT -->
           <li class="nav-item">
             <form action="/users/logout" method="POST" class="m-0">
-              <button type="submit"
+              <button
+                type="submit"
                 class="nav-link btn btn-link p-0"
-                style="font-size:0.72rem;letter-spacing:0.5px;text-transform:uppercase;color:var(--muted);">
+                style="
+                  font-size:0.72rem;
+                  letter-spacing:0.5px;
+                  text-transform:uppercase;
+                  color:var(--muted);
+                "
+              >
                 Logout
               </button>
             </form>
           </li>
+
+          <!-- USERNAME -->
           <li class="nav-item ms-1">
-            <span class="nav-link" style="color:var(--ink);font-weight:600;">
-              <i class="ti ti-user-circle" style="font-size:1rem;vertical-align:middle;"></i>
+            <span
+              class="nav-link"
+              style="color:var(--ink);font-weight:600;"
+            >
+              <i
+                class="ti ti-user-circle"
+                style="font-size:1rem;vertical-align:middle;"
+              ></i>
               &nbsp;<%= currUser.username %>
             </span>
           </li>
+
         <% } else { %>
+
+          <!-- GUEST LINKS -->
           <li class="nav-item">
-            <a class="nav-link" href="/users/signup">Sign up</a>
+            <a class="nav-link" href="/users/signup">
+              Sign up
+            </a>
           </li>
+
           <li class="nav-item ms-1">
-            <a class="btn-nav-cta" href="/users/login">Log in</a>
+            <a class="btn-nav-cta" href="/users/login">
+              Log in
+            </a>
           </li>
+
         <% } %>
 
       </ul>
@@ -60,3 +137,4 @@
 
   </div>
 </nav>
+<!-- ── END NAVBAR ── -->

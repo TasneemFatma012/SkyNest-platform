@@ -13,7 +13,9 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.2.0",
     "@mapbox/mapbox-sdk": "^0.16.2",
+    "@tabler/icons-webfont": "^3.44.0",
     "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^6.0.0",
@@ -33,7 +35,6 @@
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^9.0.1",
-    "@fortawesome/fontawesome-free": "^7.2.0",
-    "@tabler/icons-webfont": "^3.44.0"
+    "razorpay": "^2.9.6"
   }
 }

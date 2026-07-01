@@ -12,11 +12,17 @@ const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const Review = require("./models/review.js");
 const {listingSchema,reviewSchema } = require("./schema.js");
-const { validateListing, validateReview } = require("./middleware.js");
+const { validateListing, validateReview , isloggedIn , isHost} = require("./middleware.js");
+
 const listingRoutes = require("./routes/listing.js");
 const reviewRoutes = require("./routes/review.js");
 const userRoutes = require("./routes/user.js");
 const chatRoutes = require("./routes/chat.js");
+const bookingRoutes = require("./routes/bookings");
+const wishlistRoutes = require("./routes/wishlist");
+const paymentRoutes = require("./routes/payment");
+const hostRoutes = require("./routes/host.js");
+
 const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
 
@@ -112,6 +118,10 @@ app.use("/users", userRoutes);
 app.use("/listings/:id/reviews", reviewRoutes);
 app.use("/listings", listingRoutes);
 app.use("/chat", chatRoutes);
+app.use("/bookings", bookingRoutes);
+app.use("/wishlist", wishlistRoutes);
+app.use("/payment", paymentRoutes);
+app.use("/host",hostRoutes);
 
 app.get("/", (req, res) => {
   res.redirect("/listings");

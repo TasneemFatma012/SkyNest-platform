@@ -28,6 +28,8 @@ module.exports.show = async (req, res) => {
     return res.redirect("/listings");
     // throw new ExpressError(404, "Listing not found");
   }
+  listing.views = (listing.views || 0) + 1;
+  await listing.save();
   res.render("listings/show.ejs", { listing });
 };
 
