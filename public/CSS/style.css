@@ -187,74 +187,159 @@ body {
 }
 
 .toggle-track.active .toggle-thumb { left: 18px; background: white; }
+/* =========================
+   FILTER BAR
+========================= */
 
-/* ── FILTER BAR ── */
-.filter-scroll {
-  display: flex;
-  gap: 8px;
-  padding: 14px 28px;
-  overflow-x: auto;
-  border-bottom: 0.5px solid var(--border);
-  scrollbar-width: none;
+.filter-scroll{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 24px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    border-bottom:1px solid var(--border);
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
 }
 
-.filter-scroll::-webkit-scrollbar { display: none; }
-
-.f-chip {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 12px 20px;
-  border: 1.5px solid var(--warm3);
-  border-radius: 24px;
-  min-width: 70px;
-  cursor: pointer;
-  background: var(--cream);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  white-space: nowrap;
-  box-shadow: 0 1px 3px rgba(26, 20, 16, 0.08);
-  text-decoration: none;
+.filter-scroll::-webkit-scrollbar{
+    display:none;
 }
 
-.f-chip:hover {
-  transform: translateY(-2px);
-  border-color: var(--accent);
-  background: var(--accent);
-  box-shadow: 0 4px 12px rgba(232, 168, 124, 0.25);
+.f-chip{
+    flex:0 0 auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+
+    min-width:80px;
+    padding:12px 18px;
+
+    border:1.5px solid var(--warm3);
+    border-radius:22px;
+
+    background:var(--cream);
+    cursor:pointer;
+    text-decoration:none;
+
+    transition:.25s ease;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
 }
 
-.f-chip.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  box-shadow: 0 6px 16px rgba(232, 168, 124, 0.25);
-  transform: translateY(-2px);
+.f-chip:hover{
+    transform:translateY(-2px);
+    background:var(--accent);
+    border-color:var(--accent);
 }
 
-.f-chip:hover .filter-icon, 
-.f-chip.active .filter-icon { 
-  color: #ffffff !important;
-  transform: scale(1.15);
+.f-chip.active{
+    background:var(--accent);
+    border-color:var(--accent);
 }
 
-.f-chip:hover .filter-lbl,  
-.f-chip.active .filter-lbl { 
-  color: #ffffff !important;
-  font-weight: 600;
+.filter-icon{
+    font-size:22px;
+    color:var(--accent);
+    transition:.25s;
 }
 
-.filter-icon { 
-  font-size: 20px; 
-  color: var(--accent);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+.filter-lbl{
+    font-size:.75rem;
+    font-weight:500;
+    color:var(--ink2);
+    transition:.25s;
+    text-align:center;
 }
 
-.fc-lbl {
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--ink2);
-  letter-spacing: 0.3px;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+.f-chip:hover .filter-icon,
+.f-chip.active .filter-icon,
+.f-chip:hover .filter-lbl,
+.f-chip.active .filter-lbl{
+    color:#fff;
+}
+
+/* =========================
+      Tablet
+========================= */
+
+@media (max-width:992px){
+
+    .filter-scroll{
+        padding:12px 18px;
+        gap:8px;
+    }
+
+    .f-chip{
+
+        min-width:72px;
+        padding:10px 14px;
+    }
+
+    .filter-icon{
+        font-size:20px;
+    }
+
+    .filter-lbl{
+        font-size:.7rem;
+    }
+
+}
+
+/* =========================
+      Mobile
+========================= */
+
+@media (max-width:768px){
+
+    .filter-scroll{
+        padding:10px 12px;
+        gap:8px;
+    }
+
+    .f-chip{
+
+        min-width:65px;
+        padding:8px 12px;
+        border-radius:18px;
+    }
+
+    .filter-icon{
+        font-size:18px;
+    }
+
+    .filter-lbl{
+        font-size:.65rem;
+    }
+
+}
+
+/* =========================
+      Small Mobile
+========================= */
+
+@media (max-width:480px){
+
+    .filter-scroll{
+        padding:8px 10px;
+    }
+
+    .f-chip{
+
+        min-width:58px;
+        padding:8px 10px;
+    }
+
+    .filter-icon{
+        font-size:16px;
+    }
+
+    .filter-lbl{
+        font-size:.6rem;
+    }
+
 }
 /* ===========================
    HERO STRIP
@@ -1318,7 +1403,7 @@ font-size:1.6rem;
   max-width: 1180px;
   margin: 0 auto;
   padding: 2.5rem 1.5rem 4rem;
-  background: var(--paper);
+  background: var(--cream);
   font-family: 'Inter', sans-serif;
   color: var(--ink);
 }
@@ -3580,5 +3665,86 @@ height:75vh;
 width:58px;
 height:58px;
 }
+
+}
+
+/* =========================
+      Tablet
+========================= */
+
+@media (max-width:992px){
+
+    .filter-scroll{
+        padding:12px 18px;
+        gap:8px;
+    }
+
+    .f-chip{
+
+        min-width:72px;
+        padding:10px 14px;
+    }
+
+    .filter-icon{
+        font-size:20px;
+    }
+
+    .filter-lbl{
+        font-size:.7rem;
+    }
+
+}
+
+/* =========================
+      Mobile
+========================= */
+
+@media (max-width:768px){
+
+    .filter-scroll{
+        padding:10px 12px;
+        gap:8px;
+    }
+
+    .f-chip{
+
+        min-width:65px;
+        padding:8px 12px;
+        border-radius:18px;
+    }
+
+    .filter-icon{
+        font-size:18px;
+    }
+
+    .filter-lbl{
+        font-size:.65rem;
+    }
+
+}
+
+/* =========================
+      Small Mobile
+========================= */
+
+@media (max-width:480px){
+
+    .filter-scroll{
+        padding:8px 10px;
+    }
+
+    .f-chip{
+
+        min-width:58px;
+        padding:8px 10px;
+    }
+
+    .filter-icon{
+        font-size:16px;
+    }
+
+    .filter-lbl{
+        font-size:.6rem;
+    }
 
 }

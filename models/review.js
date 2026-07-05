@@ -1,23 +1,33 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const notificationSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true
+const reviewSchema = new Schema(
+  {
+    comment: {
+      type: String,
+      required: true,
+    },
+
+    rating: {
+      type: Number,
+      min: 1,
+      max: 5,
+      required: true,
+    },
+
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+
+    listing: {
+      type: Schema.Types.ObjectId,
+      ref: "Listing",
+    },
   },
-
-  message: String,
-  type: {
-    type: String,
-    enum: ["booking", "payment", "system", "review"],
-    default: "system"
-  },
-
-  isRead: {
-    type: Boolean,
-    default: false
+  {
+    timestamps: true,
   }
-}, { timestamps: true });
+);
 
-module.exports = mongoose.model("Notification", notificationSchema);
+module.exports = mongoose.model("Review", reviewSchema);
