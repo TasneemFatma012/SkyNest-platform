@@ -158,7 +158,7 @@ SkyNest/
 Clone the repository:
 
 ```bash
-git clone https://github.com/TasneemFatma012/Roamio-platform.git
+git clone https://github.com/TasneemFatma012/SkyNest-platform.git
 ```
 
 Navigate to the project:
