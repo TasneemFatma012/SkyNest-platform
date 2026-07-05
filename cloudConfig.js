@@ -10,7 +10,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "wanderlust_DAV",
+    folder: "SkyNest_DAV",
     allowed_formats: ["png", "jpg", "jpeg"]
   }
 });

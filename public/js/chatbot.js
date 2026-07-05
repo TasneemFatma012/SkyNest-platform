@@ -74,7 +74,7 @@ function showLoader(){
     <div class="ai-box">
 
         <div class="ai-title">
-            WanderLust AI is thinking...
+            Roamoi AI is thinking...
         </div>
 
         <div class="ai-shimmer"></div>

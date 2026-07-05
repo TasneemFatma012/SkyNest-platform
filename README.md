@@ -1,10 +1,10 @@
-# 🏡 Roamio
+# 🏡 SkyNest
 
 > **Book Smart. Stay Anywhere.**
 
-Roamio is a modern full-stack vacation rental and property booking platform that connects travelers with unique accommodations while providing hosts with powerful tools to manage properties, bookings, revenue, and guest interactions.
+SkyNest is a modern full-stack vacation rental and property booking platform that connects travelers with unique accommodations while providing hosts with powerful tools to manage properties, bookings, revenue, and guest interactions.
 
-Designed with a clean, responsive interface and built using modern web technologies, Roamio delivers a seamless booking experience for guests and a comprehensive management dashboard for hosts.
+Designed with a clean, responsive interface and built using modern web technologies, SkyNest delivers a seamless booking experience for guests and a comprehensive management dashboard for hosts.
 
 ---
 
@@ -133,7 +133,7 @@ Designed with a clean, responsive interface and built using modern web technolog
 # 📂 Project Structure
 
 ```text
-Roamio/
+SkyNest/
 │
 ├── controllers/
 ├── middleware/
@@ -158,13 +158,13 @@ Roamio/
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/roamio.git
+git clone 
 ```
 
 Navigate to the project:
 
 ```bash
-cd roamio
+cd SkyNest
 ```
 
 Install dependencies:

@@ -447,7 +447,7 @@ const result = await ai.models.generateContent({
 
     contents: `
 
-You are WanderLust AI.
+You are SkyNest AI.
 
 Rules:
 
