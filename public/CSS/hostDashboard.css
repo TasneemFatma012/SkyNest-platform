@@ -956,6 +956,77 @@
 .status.pending{ background:#f59e0b; }
 .status.cancelled{ background:#ef4444; }
 
+/* ===========================
+   Status Action Buttons
+=========================== */
+
+.status-actions{
+    display:flex;
+    gap:12px;
+    margin-top:18px;
+}
+
+.status-actions button{
+    flex:1;
+    padding:12px 18px;
+    border:none;
+    border-radius:14px;
+    font-size:.95rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .3s ease;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+/* Confirm Button */
+
+.status-actions button:first-child{
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    color:#fff;
+    box-shadow:0 8px 18px rgba(34,197,94,.25);
+}
+
+.status-actions button:first-child:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 25px rgba(34,197,94,.35);
+}
+
+/* Cancel Button */
+
+.status-actions button:last-child{
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+    color:#fff;
+    box-shadow:0 8px 18px rgba(239,68,68,.25);
+}
+
+.status-actions button:last-child:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 25px rgba(239,68,68,.35);
+}
+
+/* Click Effect */
+
+.status-actions button:active{
+    transform:scale(.96);
+}
+
+/* Tablet */
+
+@media(max-width:768px){
+
+.status-actions{
+    flex-direction:column;
+}
+
+.status-actions button{
+    width:100%;
+}
+
+}
+
 /* SIDE PANEL */
 .booking-side{
     display:flex;
@@ -1090,3 +1161,183 @@
     }
 }
 
+/* =========================================
+   TABLET (992px)
+========================================= */
+
+@media (max-width:992px){
+
+.booking-layout{
+    grid-template-columns:1fr;
+    gap:24px;
+}
+
+.booking-side{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.booking-table-card{
+    overflow-x:auto;
+}
+
+.lux-table{
+    min-width:800px;
+}
+
+.dashboard-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:18px;
+}
+
+.filter-bar{
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.search-bar{
+    width:100%;
+}
+
+.search-bar input{
+    flex:1;
+}
+
+}
+
+/* =========================================
+   MOBILE (768px)
+========================================= */
+
+@media (max-width:768px){
+
+.host-dashboard{
+    padding:18px;
+}
+
+.dashboard-header h1{
+    font-size:2rem;
+}
+
+.dashboard-header p{
+    font-size:.95rem;
+}
+
+.filter-bar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.filter-bar a{
+    flex:1;
+    text-align:center;
+}
+
+.search-bar{
+    width:100%;
+}
+
+.search-bar input{
+    width:100%;
+}
+
+.booking-side{
+    grid-template-columns:1fr;
+}
+
+.booking-table-card{
+    overflow-x:auto;
+    border-radius:16px;
+}
+
+.lux-table{
+    min-width:700px;
+}
+
+.status-actions{
+    flex-direction:column;
+    margin-top:10px;
+}
+
+.status-actions button{
+    width:100%;
+}
+
+.guest-cell{
+    min-width:180px;
+}
+
+.date-box{
+    min-width:170px;
+}
+
+}
+
+/* =========================================
+   SMALL MOBILE (480px)
+========================================= */
+
+@media (max-width:480px){
+
+.host-dashboard{
+    padding:14px;
+}
+
+.dashboard-header h1{
+    font-size:1.7rem;
+}
+
+.dashboard-badge{
+    font-size:.75rem;
+}
+
+.filter-bar{
+    gap:8px;
+}
+
+.filter-bar a{
+    font-size:.8rem;
+    padding:8px 12px;
+}
+
+.search-bar button{
+    width:100%;
+    margin-top:8px;
+}
+
+.search-bar{
+    display:flex;
+    flex-direction:column;
+}
+
+.avatar{
+    width:38px;
+    height:38px;
+    font-size:.9rem;
+}
+
+.price{
+    font-size:.95rem;
+}
+
+.status{
+    font-size:.75rem;
+}
+
+.status-actions button{
+    padding:10px;
+    font-size:.85rem;
+}
+
+.insight-card{
+    padding:18px;
+}
+
+.insight-card h2{
+    font-size:1.5rem;
+}
+
+}
