@@ -1357,13 +1357,7 @@ font-size:1.6rem;
   margin-top:24px;
 }
 
-#calendar{
-  background:#fff;
-  border-radius:18px;
-  padding:20px;
-  min-height:700px;
-  border:1px solid var(--border);
-}
+
 .fc-toolbar-title{
   font-size:1.2rem !important;
   font-weight:700;
@@ -1604,7 +1598,7 @@ font-size:1.6rem;
 /* ── Listing detail (left) ── */
 
 .listing-detail__photo {
-  border-radius: 18px;
+  border-radius: 18px;+
   overflow: hidden;
   height: 380px;
 }

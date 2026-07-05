@@ -301,59 +301,6 @@
 }
 
 /* ==========================================================
-   CALENDAR
-========================================================== */
-
-.calendar-card{
-    background:#fafafa;
-    border-radius:20px;
-    padding:20px;
-    border:1px solid #ececec;
-    box-shadow:0 10px 30px rgba(0,0,0,.06);
-}
-
-#calendar{
-    width:100%;
-}
-
-.fc{
-    font-family:'Manrope',sans-serif;
-}
-
-.fc-toolbar-title{
-    font-size:24px!important;
-    font-family:'Playfair Display',serif;
-}
-
-.fc-button{
-    background:var(--red)!important;
-    border:none!important;
-    border-radius:10px!important;
-    padding:8px 16px!important;
-}
-
-.fc-button:hover{
-    background:var(--red2)!important;
-}
-
-.fc-daygrid-event{
-    border:none!important;
-    border-radius:8px!important;
-    padding:3px 6px!important;
-    font-size:12px!important;
-}
-
-.fc-daygrid-day-number{
-    color:var(--ink);
-    font-weight:600;
-}
-
-.fc-scrollgrid{
-    border-radius:18px;
-    overflow:hidden;
-}
-
-/* ==========================================================
    DASHBOARD ROW / CARD
 ========================================================== */
 
@@ -864,7 +811,13 @@
     font-size:13px;
 
 }
+.fc .fc-button-group .fc-button{
+    margin-right: 5px !important;
+}
 
+.fc .fc-button-group .fc-button:last-child{
+    margin-right: 0 !important;
+}
 
 /* =========================
    BOOKING LAYOUT
@@ -1339,5 +1292,92 @@
 .insight-card h2{
     font-size:1.5rem;
 }
+
+}
+
+
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media(max-width:992px){
+
+    .calendar-card{
+        padding:18px;
+    }
+
+    .fc-toolbar-title{
+        font-size:22px!important;
+    }
+
+    .fc .fc-toolbar{
+        justify-content:center;
+        text-align:center;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .calendar-card{
+        padding:15px;
+    }
+
+    .fc-toolbar{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .fc-toolbar-title{
+        font-size:20px!important;
+    }
+
+    .fc-button{
+        padding:7px 14px!important;
+        font-size:14px!important;
+    }
+
+    .fc-col-header-cell-cushion{
+        font-size:13px;
+    }
+
+    .fc-daygrid-day-number{
+        font-size:13px;
+    }
+
+    .fc-daygrid-event{
+        font-size:10px!important;
+        padding:2px 4px!important;
+    }
+
+}
+
+@media(max-width:576px){
+
+    .calendar-card{
+        padding:10px;
+        border-radius:16px;
+    }
+
+    .fc-toolbar-title{
+        font-size:18px!important;
+    }
+
+    .fc .fc-button{
+        width:100%;
+        margin-bottom:6px;
+    }
+
+    .modal-dialog{
+        margin:10px;
+    }
+
+    .modal-content{
+        border-radius:16px;
+    }
+
+    .modal-body{
+        padding:18px;
+    }
 
 }

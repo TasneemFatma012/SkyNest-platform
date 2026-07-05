@@ -8,7 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         initialView: "dayGridMonth",
 
-        height: 700,
+        height: "auto",
+
+        
+        
+
 
         selectable: false,
 
