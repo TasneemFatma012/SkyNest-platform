@@ -158,7 +158,7 @@ SkyNest/
 Clone the repository:
 
 ```bash
-git clone 
+git clone https://github.com/TasneemFatma012/Roamio-platform.git
 ```
 
 Navigate to the project:
@@ -232,22 +232,6 @@ http://localhost:8080
 * Mobile Application
 * Live Chat Between Host & Guest
 * Dynamic Pricing System
-
----
-
-# 📷 Screenshots
-
-Include screenshots for:
-
-* Home Page
-* Property Listing
-* Property Details
-* Booking Page
-* Host Dashboard
-* Analytics Dashboard
-* Calendar
-* Notifications
-* Wishlist
 
 ---
 
