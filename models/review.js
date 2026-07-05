@@ -1,21 +1,23 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose");
 
-const reviewSchema = new Schema({
-    comment : String,
-    rating:{
-        type:Number,
-        min:1,
-        max:5
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
-    author:{
-        type:Schema.Types.ObjectId,
-        ref:'User'
-    },
-});
+const notificationSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
 
-module.exports = mongoose.model("Review", reviewSchema);
+  message: String,
+  type: {
+    type: String,
+    enum: ["booking", "payment", "system", "review"],
+    default: "system"
+  },
+
+  isRead: {
+    type: Boolean,
+    default: false
+  }
+}, { timestamps: true });
+
+module.exports = mongoose.model("Notification", notificationSchema);

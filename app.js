@@ -1,5 +1,5 @@
 require("dotenv").config();
-console.log(process.env.SECRET);
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -22,6 +22,8 @@ const bookingRoutes = require("./routes/bookings");
 const wishlistRoutes = require("./routes/wishlist");
 const paymentRoutes = require("./routes/payment");
 const hostRoutes = require("./routes/host.js");
+
+
 
 const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
@@ -127,16 +129,39 @@ app.get("/", (req, res) => {
   res.redirect("/listings");
 });
 
+
+const http = require("http");
+const { Server } = require("socket.io");
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: { origin: "*" }
+});
+
+app.set("io", io);
+
+io.on("connection", (socket) => {
+  console.log("User connected:", socket.id);
+
+  socket.on("joinRoom", (userId) => {
+    socket.join(userId);
+  });
+});
+
+server.listen(8080);
 app.use((req,res,next) => {
   next(new ExpressError(404,"Page Not Found"));
 });
 
 app.use((err,req,res,next) => {
-  // let {statusCode , message} = err;
+  
   let { statusCode = 500, message = "Something went wrong" } = err;
   res.status(statusCode).render("error.ejs",{message});
-  // res.status(statusCode).send(message);
+ 
 });
+
+
 
 app.listen(port,() => {
     console.log(`server is listening to ${port}`);

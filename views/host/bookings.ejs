@@ -1,0 +1,152 @@
+<%- layout("layouts/boilerplate") %>
+<link rel="stylesheet" href="/CSS/hostDashboard.css">
+<div class="host-dashboard">
+
+  <!-- HEADER -->
+  <div class="dashboard-header">
+    <div>
+      <span class="dashboard-badge">RESERVATIONS</span>
+      <h1>Booking Control Center</h1>
+      <p>Manage, track and analyze all guest bookings in real-time</p>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+
+  <a href="/host/bookings" class="<%= filter==='all' ? 'active' : '' %>">All</a>
+  <a href="/host/bookings?filter=today" class="<%= filter==='today' ? 'active' : '' %>">Today</a>
+  <a href="/host/bookings?filter=month" class="<%= filter==='month' ? 'active' : '' %>">Month</a>
+  <a href="/host/bookings?filter=year" class="<%= filter==='year' ? 'active' : '' %>">Year</a>
+
+  <form class="search-bar" method="GET" action="/host/bookings">
+
+  <input 
+    type="text"
+    name="search"
+    placeholder="Search guest..."
+    value="<%= search || '' %>"
+  >
+
+  <button type="submit">Search</button>
+
+</form>
+
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="booking-layout">
+    
+
+    <!-- LEFT: TABLE -->
+    <div class="booking-table-card">
+
+      <table class="lux-table">
+
+        <thead>
+          <tr>
+            <th>Guest</th>
+            <th>Property</th>
+            <th>Dates</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <% bookings.forEach(b => { %>
+            <tr class="lux-row">
+
+              <td>
+                <div class="guest-cell">
+                  <div class="avatar"><%= b.user?.username?.charAt(0) || "G" %></div>
+                  <span><%= b.user?.username || "Guest" %></span>
+                </div>
+              </td>
+
+              <td>
+                <strong><%= b.listing?.title %></strong>
+              </td>
+
+              <td>
+                <div class="date-box">
+                  <small><%= new Date(b.checkIn).toDateString() %></small>
+                  <small>→</small>
+                  <small><%= new Date(b.checkOut).toDateString() %></small>
+                </div>
+              </td>
+
+              <td>
+                <span class="price">₹<%= b.amount %></span>
+              </td>
+
+             <td>
+  <span class="status <%= b.status %>">
+    <%= b.status %>
+  </span>
+
+  <div class="status-actions">
+
+    <button onclick="updateStatus('<%= b._id %>', 'confirmed')">
+      Confirm
+    </button>
+
+    <button onclick="updateStatus('<%= b._id %>', 'cancelled')">
+      Cancel
+    </button>
+
+  </div>
+</td>
+
+            </tr>
+          <% }) %>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <!-- RIGHT: INSIGHTS PANEL -->
+    <div class="booking-side">
+
+      <div class="insight-card">
+        <h3>💰 Earnings</h3>
+        <h2>₹<%= bookings.reduce((a,b)=>a+(b.amount||0),0) %></h2>
+      </div>
+
+      <div class="insight-card">
+        <h3>📅 Total Bookings</h3>
+        <h2><%= bookings.length %></h2>
+      </div>
+
+      <div class="insight-card">
+        <h3>🔥 Active</h3>
+        <h2><%= bookings.filter(b=>b.status==='confirmed').length %></h2>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+async function updateStatus(id, status){
+
+  const res = await fetch(`/host/booking/status/${id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ status })
+  });
+
+  const data = await res.json();
+
+  if(data.success){
+    location.reload();
+  }
+}
+</script>

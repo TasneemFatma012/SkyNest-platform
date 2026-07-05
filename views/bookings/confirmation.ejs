@@ -1,0 +1,349 @@
+<%- layout("layouts/boilerplate") %>
+
+<!-- Celebratory Modal -->
+<div id="celebrationModal" class="celebration-modal">
+  <div class="celebration-content">
+    <div class="celebration-emoji">🎉</div>
+    <h2 class="celebration-title">Your Booking is Confirmed!</h2>
+    <p class="celebration-message">Get ready for an amazing experience! Your reservation is secure and the host has been notified.</p>
+    <button id="closeCelebration" class="celebration-close">Continue</button>
+  </div>
+</div>
+
+<div class="confirmation-wrapper">
+  <div class="confirmation-card">
+    
+    <!-- Success Header -->
+    <div class="confirmation-header">
+      <div class="confirmation-icon">✓</div>
+      <h1 class="confirmation-title">Booking Confirmed!</h1>
+      <p class="confirmation-subtitle">Your reservation has been successfully completed</p>
+    </div>
+
+    <!-- Booking Details -->
+    <div class="confirmation-details">
+      
+      <!-- Listing Image & Title -->
+      <div class="confirmation-listing">
+        <img src="<%= booking.listing.image.url %>" alt="<%= booking.listing.title %>" class="conf-img">
+        <div class="conf-listing-info">
+          <h2 class="conf-listing-title"><%= booking.listing.title %></h2>
+          <p class="conf-location">
+            📍 <%= booking.listing.location %>, <%= booking.listing.country %>
+          </p>
+        </div>
+      </div>
+
+      <!-- Location Map -->
+      <div class="conf-map-container">
+        <div id="confirmationMap" class="conf-map"></div>
+      </div>
+
+      <!-- Travel Time Section -->
+      <div id="travelSection" class="travel-section" style="display: none;">
+        <div class="travel-title">
+          <span class="travel-icon">🚗</span>
+          <span>Travel Time from Your Location</span>
+        </div>
+        <div class="travel-grid">
+          <div class="travel-item">
+            <div class="travel-label">Distance</div>
+            <div class="travel-value" id="travelDistance">Calculating...</div>
+          </div>
+          <div class="travel-item">
+            <div class="travel-label">By Car</div>
+            <div class="travel-value" id="travelTime">Calculating...</div>
+          </div>
+          <div class="travel-item">
+            <div class="travel-label">By Walking</div>
+            <div class="travel-value" id="walkingTime">Calculating...</div>
+          </div>
+        </div>
+        <p class="travel-note">⚠️ Travel times are approximate based on current location and traffic conditions.</p>
+      </div>
+
+      <!-- Divider -->
+      <div class="confirmation-divider"></div>
+
+      <!-- Booking Info Grid -->
+      <div class="conf-grid">
+        <div class="conf-item">
+          <label>Check In</label>
+          <p class="conf-value"><%= booking.checkIn.toDateString() %></p>
+          <small class="conf-time">After 3:00 PM</small>
+        </div>
+
+        <div class="conf-item">
+          <label>Check Out</label>
+          <p class="conf-value"><%= booking.checkOut.toDateString() %></p>
+          <small class="conf-time">Before 11:00 AM</small>
+        </div>
+
+        <div class="conf-item">
+          <label>Number of Guests</label>
+          <p class="conf-value"><%= booking.guests %> <%= booking.guests > 1 ? 'Guests' : 'Guest' %></p>
+        </div>
+
+        <div class="conf-item">
+          <label>Number of Nights</label>
+          <p class="conf-value">
+            <% 
+              const nights = Math.ceil((new Date(booking.checkOut) - new Date(booking.checkIn)) / (1000 * 60 * 60 * 24));
+            %>
+            <%= nights %> <%= nights > 1 ? 'Nights' : 'Night' %>
+          </p>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="confirmation-divider"></div>
+
+      <!-- Price Breakdown -->
+      <div class="price-breakdown">
+        <% 
+          const pricePerNight = booking.listing.price;
+          const totalBeforeGuests = pricePerNight * nights;
+        %>
+        <div class="price-row">
+          <span>₹<%= pricePerNight.toLocaleString("en-IN") %> per night × <%= nights %> night(s)</span>
+          <strong>₹<%= totalBeforeGuests.toLocaleString("en-IN") %></strong>
+        </div>
+        <div class="price-row">
+          <span>For <%= booking.guests %> guest(s)</span>
+          <strong>×<%= booking.guests %></strong>
+        </div>
+        <div class="breakdown-divider"></div>
+        <div class="price-total">
+          <span>Total Paid</span>
+          <strong>₹<%= booking.amount.toLocaleString("en-IN") %></strong>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="confirmation-divider"></div>
+
+      <!-- Booking Reference -->
+      <div class="booking-reference">
+        <p><strong>Booking Reference:</strong> <code><%= booking._id %></code></p>
+        <p><strong>Payment ID:</strong> <code><%= booking.paymentId %></code></p>
+      </div>
+
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="confirmation-actions">
+      <a href="/listings/<%= booking.listing._id %>" class="conf-btn conf-btn-secondary">
+        View Listing
+      </a>
+      <a href="/bookings/my/bookings" class="conf-btn conf-btn-primary">
+        My Bookings
+      </a>
+    </div>
+
+    <!-- Info Message -->
+    <div class="confirmation-info">
+      <p>📧 A confirmation email has been sent to your registered email address.</p>
+      <p>📞 The host will contact you soon with check-in details.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── CONFETTI ANIMATION ──
+function createConfetti() {
+  const colors = ['#d94f3d', '#e8a87c', '#faf7f3'];
+  for (let i = 0; i < 50; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.top = '-10px';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.width = (Math.random() * 10 + 5) + 'px';
+    piece.style.height = piece.style.width;
+    piece.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+    piece.style.opacity = Math.random() * 0.8 + 0.3;
+    document.body.appendChild(piece);
+    
+    setTimeout(() => piece.remove(), 5000);
+  }
+}
+
+// ── MODAL FUNCTIONALITY ──
+const celebrationModal = document.getElementById('celebrationModal');
+const closeBtn = document.getElementById('closeCelebration');
+
+if (closeBtn) {
+  closeBtn.addEventListener('click', () => {
+    celebrationModal.style.animation = 'fadeOut 0.3s ease-out forwards';
+    setTimeout(() => {
+      celebrationModal.remove();
+    }, 300);
+  });
+}
+
+// ── GET USER LOCATION & CALCULATE TRAVEL TIME ──
+function getUserLocationAndCalculateTravelTime() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const userLat = position.coords.latitude;
+        const userLng = position.coords.longitude;
+        const listingCoords = <%= JSON.stringify(booking.listing.geometry.coordinates) %>;
+        
+        calculateTravelTime(userLat, userLng, listingCoords[1], listingCoords[0]);
+      },
+      (error) => {
+        console.log('Location access denied or unavailable:', error.message);
+      }
+    );
+  } else {
+    console.log('Geolocation not supported');
+  }
+}
+
+function calculateTravelTime(userLat, userLng, listingLat, listingLng) {
+  if (typeof mapboxgl === 'undefined') {
+    setTimeout(() => calculateTravelTime(userLat, userLng, listingLat, listingLng), 100);
+    return;
+  }
+
+  const mapboxToken = '<%= process.env.MAP_TOKEN %>';
+  const coordinates = `${userLng},${userLat};${listingLng},${listingLat}`;
+  
+  // Mapbox Distance Matrix API
+  const url = `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${coordinates}?access_token=${mapboxToken}`;
+  
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      if (data.distances && data.durations) {
+        const distanceKm = (data.distances[0][1] / 1000).toFixed(1);
+        const durationMinutes = Math.round(data.durations[0][1] / 60);
+        const durationHours = (durationMinutes / 60).toFixed(1);
+        
+        // Calculate walking time (approx 5 km/h)
+        const walkingMinutes = Math.round((data.distances[0][1] / 1000 / 5) * 60);
+        const walkingHours = (walkingMinutes / 60).toFixed(1);
+        
+        // Update DOM
+        document.getElementById('travelDistance').innerHTML = `<strong>${distanceKm} km</strong>`;
+        
+        if (durationMinutes < 60) {
+          document.getElementById('travelTime').innerHTML = `<strong>${durationMinutes} min</strong>`;
+        } else {
+          document.getElementById('travelTime').innerHTML = `<strong>${durationHours} hrs</strong>`;
+        }
+        
+        if (walkingMinutes < 60) {
+          document.getElementById('walkingTime').innerHTML = `<strong>${walkingMinutes} min</strong>`;
+        } else {
+          document.getElementById('walkingTime').innerHTML = `<strong>${walkingHours} hrs</strong>`;
+        }
+        
+        // Show the travel section
+        document.getElementById('travelSection').style.display = 'block';
+        console.log('Travel time calculated:', {distanceKm, durationMinutes, walkingMinutes});
+      } else {
+        console.log('No travel data available');
+      }
+    })
+    .catch(error => {
+      console.error('Error calculating travel time:', error);
+    });
+}
+
+// Request user location when page loads
+window.addEventListener('load', () => {
+  createConfetti();
+  getUserLocationAndCalculateTravelTime();
+});
+
+// ── MAPBOX INITIALIZATION ──
+function initializeMap() {
+  if (typeof mapboxgl === 'undefined') {
+    console.log('Waiting for Mapbox GL to load...');
+    setTimeout(initializeMap, 100);
+    return;
+  }
+
+  try {
+    mapboxgl.accessToken = '<%= process.env.MAP_TOKEN %>';
+
+    if (!mapboxgl.accessToken) {
+      console.error('Mapbox token not set in environment');
+      return;
+    }
+
+    // Initialize map
+    const map = new mapboxgl.Map({
+      container: 'confirmationMap',
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: <%= JSON.stringify(booking.listing.geometry.coordinates) %>,
+      zoom: 12
+    });
+
+    // Create custom marker element
+    const markerEl = document.createElement('div');
+    markerEl.className = 'mapbox-marker';
+    markerEl.innerHTML = '📍';
+    
+    // Add custom marker
+    new mapboxgl.Marker(markerEl, { scale: 1.5 })
+      .setLngLat(<%= JSON.stringify(booking.listing.geometry.coordinates) %>)
+      .addTo(map);
+
+    // Create custom popup HTML
+    const popupContent = `
+      <div class="mapbox-popup-content">
+        <div class="popup-header">
+          <span class="popup-pin">📍</span>
+          <h3 class="popup-title"><%= booking.listing.title %></h3>
+        </div>
+        <p class="popup-location"><%= booking.listing.location %></p>
+        <p class="popup-country"><%= booking.listing.country %></p>
+        <div class="popup-divider"></div>
+        <div class="popup-info">
+          <span class="popup-label">Check In: </span>
+          <span class="popup-value"><%= booking.checkIn.toLocaleDateString('en-IN') %></span>
+        </div>
+        <div class="popup-info">
+          <span class="popup-label">Guests: </span>
+          <span class="popup-value"><%= booking.guests %></span>
+        </div>
+        <a href="/listings/<%= booking.listing._id %>" class="popup-link">View Full Details →</a>
+      </div>
+    `;
+
+    // Add popup with custom styling
+    new mapboxgl.Popup({ offset: 35, className: 'mapbox-popup-custom' })
+      .setLngLat(<%= JSON.stringify(booking.listing.geometry.coordinates) %>)
+      .setHTML(popupContent)
+      .addTo(map);
+
+    console.log('Map initialized successfully');
+  } catch (error) {
+    console.error('Error initializing Mapbox:', error);
+  }
+}
+
+// Start initialization
+initializeMap();
+
+// Add fadeOut animation
+if (!document.querySelector('style[data-confetti]')) {
+  const style = document.createElement('style');
+  style.setAttribute('data-confetti', 'true');
+  style.textContent = `
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+</script>

@@ -1,5 +1,134 @@
 const sampleListings = [
   {
+  title: "Luxury Villa in Goa",
+  description: "Relax in this beautiful villa with a private pool just minutes from Baga Beach.",
+  image: {
+    filename: "listingimage",
+    url: "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+  },
+  price: 4500,
+  location: "Goa",
+  country: "India",
+  category: "Beach",
+},
+
+{
+  title: "Houseboat on Dal Lake",
+  description: "Experience the beauty of Kashmir with a luxurious stay on a traditional houseboat.",
+  image: {
+    filename: "listingimage",
+    url: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+  },
+  price: 3500,
+  location: "Srinagar",
+  country: "India",
+  category: "Trending",
+},
+
+{
+  title: "Mountain Cottage in Manali",
+  description: "Enjoy stunning Himalayan views from this peaceful wooden cottage.",
+  image: {
+    filename: "listingimage",
+    url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+  },
+  price: 2800,
+  location: "Manali",
+  country: "India",
+  category: "Mountains",
+},
+
+{
+  title: "Snow Resort in Gulmarg",
+  description: "Stay near the famous ski slopes with breathtaking snow-covered views.",
+  image: {
+    filename: "listingimage",
+    url: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963",
+  },
+  price: 5200,
+  location: "Gulmarg",
+  country: "India",
+  category: "Skiing",
+},
+
+{
+  title: "Tea Garden Cottage",
+  description: "A peaceful stay surrounded by tea plantations and misty hills.",
+  image: {
+    filename: "listingimage",
+    url: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e",
+  },
+  price: 2400,
+  location: "Munnar",
+  country: "India",
+  category: "Nature",
+},
+
+{
+  title: "Coffee Estate Homestay",
+  description: "Stay inside a coffee plantation with authentic Coorg hospitality.",
+  image: {
+    filename: "listingimage",
+    url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
+  },
+  price: 2600,
+  location: "Coorg",
+  country: "India",
+  category: "Farms",
+},
+
+{
+  title: "Modern Apartment in Bengaluru",
+  description: "Premium apartment in the heart of Bengaluru, perfect for business and leisure.",
+  image: {
+    filename: "listingimage",
+    url: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+  },
+  price: 3200,
+  location: "Bengaluru",
+  country: "India",
+  category: "City",
+},
+
+{
+  title: "Heritage Haveli Jaipur",
+  description: "Experience royal Rajasthani hospitality in a beautifully restored haveli.",
+  image: {
+    filename: "listingimage",
+    url: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",
+  },
+  price: 3900,
+  location: "Jaipur",
+  country: "India",
+  category: "Homes",
+},
+
+{
+  title: "Riverside Camp Rishikesh",
+  description: "Adventure camping beside the Ganga with bonfire and rafting nearby.",
+  image: {
+    filename: "listingimage",
+    url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+  },
+  price: 1800,
+  location: "Rishikesh",
+  country: "India",
+  category: "Camping",
+},
+
+{
+  title: "Luxury Studio in Mumbai",
+  description: "Elegant studio apartment close to Marine Drive and major attractions.",
+  image: {
+    filename: "listingimage",
+    url: "https://images.unsplash.com/photo-1494526585095-c41746248156",
+  },
+  price: 4200,
+  location: "Mumbai",
+  country: "India",
+  category: "Rooms",
+},
+  {
     title: "Cozy Beachfront Cottage",
     description:
       "Escape to this charming beachfront cottage for a relaxing getaway. Enjoy stunning ocean views and easy access to the beach.",
@@ -10,6 +139,7 @@ const sampleListings = [
     price: 1500,
     location: "Malibu",
     country: "United States",
+    category: "Beach",
   },
   {
     title: "Modern Loft in Downtown",
@@ -22,6 +152,7 @@ const sampleListings = [
     price: 1200,
     location: "New York City",
     country: "United States",
+    category: "Rooms",
   },
   {
     title: "Mountain Retreat",
@@ -34,7 +165,9 @@ const sampleListings = [
     price: 1000,
     location: "Aspen",
     country: "United States",
+    category: "Mountains",
   },
+
   {
     title: "Historic Villa in Tuscany",
     description:
@@ -46,6 +179,7 @@ const sampleListings = [
     price: 2500,
     location: "Florence",
     country: "Italy",
+    category: "Homes",
   },
   {
     title: "Secluded Treehouse Getaway",
@@ -58,6 +192,7 @@ const sampleListings = [
     price: 800,
     location: "Portland",
     country: "United States",
+    category: "Nature",
   },
   {
     title: "Beachfront Paradise",
@@ -70,6 +205,7 @@ const sampleListings = [
     price: 2000,
     location: "Cancun",
     country: "Mexico",
+    category: "Beach",
   },
   {
     title: "Rustic Cabin by the Lake",
@@ -82,6 +218,7 @@ const sampleListings = [
     price: 900,
     location: "Lake Tahoe",
     country: "United States",
+    category: "Camping",
   },
   {
     title: "Luxury Penthouse with City Views",
@@ -94,6 +231,7 @@ const sampleListings = [
     price: 3500,
     location: "Los Angeles",
     country: "United States",
+    category: "City",
   },
   {
     title: "Ski-In/Ski-Out Chalet",
@@ -106,6 +244,7 @@ const sampleListings = [
     price: 3000,
     location: "Verbier",
     country: "Switzerland",
+    category: "Skiing",
   },
   {
     title: "Safari Lodge in the Serengeti",
@@ -118,6 +257,7 @@ const sampleListings = [
     price: 4000,
     location: "Serengeti National Park",
     country: "Tanzania",
+    category: "Nature",
   },
   {
     title: "Historic Canal House",
@@ -130,6 +270,7 @@ const sampleListings = [
     price: 1800,
     location: "Amsterdam",
     country: "Netherlands",
+    category: "Homes",
   },
   {
     title: "Private Island Retreat",
@@ -142,6 +283,7 @@ const sampleListings = [
     price: 10000,
     location: "Fiji",
     country: "Fiji",
+    category: "Beach",
   },
   {
     title: "Charming Cottage in the Cotswolds",
@@ -154,6 +296,7 @@ const sampleListings = [
     price: 1200,
     location: "Cotswolds",
     country: "United Kingdom",
+    category: "Homes",
   },
   {
     title: "Historic Brownstone in Boston",
@@ -166,6 +309,7 @@ const sampleListings = [
     price: 2200,
     location: "Boston",
     country: "United States",
+    category: "City",
   },
   {
     title: "Beachfront Bungalow in Bali",
@@ -178,6 +322,7 @@ const sampleListings = [
     price: 1800,
     location: "Bali",
     country: "Indonesia",
+    category: "Beach",
   },
   {
     title: "Mountain View Cabin in Banff",
@@ -190,6 +335,7 @@ const sampleListings = [
     price: 1500,
     location: "Banff",
     country: "Canada",
+    category: "Mountains",
   },
   {
     title: "Art Deco Apartment in Miami",
@@ -202,6 +348,7 @@ const sampleListings = [
     price: 1600,
     location: "Miami",
     country: "United States",
+    category: "City",
   },
   {
     title: "Tropical Villa in Phuket",
@@ -214,6 +361,7 @@ const sampleListings = [
     price: 3000,
     location: "Phuket",
     country: "Thailand",
+    category: "Beach",
   },
   {
     title: "Historic Castle in Scotland",
@@ -226,6 +374,7 @@ const sampleListings = [
     price: 4000,
     location: "Scottish Highlands",
     country: "United Kingdom",
+    category: "Homes",
   },
   {
     title: "Desert Oasis in Dubai",
@@ -238,6 +387,7 @@ const sampleListings = [
     price: 5000,
     location: "Dubai",
     country: "United Arab Emirates",
+    category: "Trending",
   },
   {
     title: "Rustic Log Cabin in Montana",
@@ -250,6 +400,7 @@ const sampleListings = [
     price: 1100,
     location: "Montana",
     country: "United States",
+    category: "Farms",
   },
   {
     title: "Beachfront Villa in Greece",
@@ -262,6 +413,7 @@ const sampleListings = [
     price: 2500,
     location: "Mykonos",
     country: "Greece",
+    category: "Beach",
   },
   {
     title: "Eco-Friendly Treehouse Retreat",
@@ -274,6 +426,7 @@ const sampleListings = [
     price: 750,
     location: "Costa Rica",
     country: "Costa Rica",
+    category: "Nature",
   },
   {
     title: "Historic Cottage in Charleston",
@@ -286,6 +439,7 @@ const sampleListings = [
     price: 1600,
     location: "Charleston",
     country: "United States",
+    category: "Homes",
   },
   {
     title: "Modern Apartment in Tokyo",
@@ -298,6 +452,7 @@ const sampleListings = [
     price: 2000,
     location: "Tokyo",
     country: "Japan",
+    category: "City",
   },
   {
     title: "Lakefront Cabin in New Hampshire",
@@ -310,6 +465,7 @@ const sampleListings = [
     price: 1200,
     location: "New Hampshire",
     country: "United States",
+    category: "Camping",
   },
   {
     title: "Luxury Villa in the Maldives",
@@ -322,6 +478,7 @@ const sampleListings = [
     price: 6000,
     location: "Maldives",
     country: "Maldives",
+    category: "Arctic",
   },
   {
     title: "Ski Chalet in Aspen",
@@ -334,6 +491,7 @@ const sampleListings = [
     price: 4000,
     location: "Aspen",
     country: "United States",
+    category: "Skiing",
   },
   {
     title: "Secluded Beach House in Costa Rica",
@@ -346,7 +504,22 @@ const sampleListings = [
     price: 1800,
     location: "Costa Rica",
     country: "Costa Rica",
+    category: "Beach",
   },
+  {
+    title: "Charming Cottage in the Cotswolds",
+    description:
+      "Escape to the picturesque Cotswolds in this quaint and charming cottage with a thatched roof.",
+    image: {
+      filename: "listingimage",
+      url: "https://images.unsplash.com/photo-1602088113235-229c19758e9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmVhY2glMjB2YWNhdGlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    },
+    price: 1200,
+    location: "Cotswolds",
+    country: "United Kingdom",
+    category: "Homes", 
+  },
+
 ];
 
 module.exports = { data: sampleListings };

@@ -16,13 +16,13 @@ async function main() {
 const initDB = async () => {
   await Listing.deleteMany({});
 
-  // geometry aur owner dono add karo
+  
   const data = initData.data.map((obj) => ({
     ...obj,
-    owner: "69edbcc082d3fa898da75a59", // apna actual user _id yahan daalo
+    owner: "69edbcc082d3fa898da75a59",
     geometry: {
       type: "Point",
-      coordinates: [0, 0], // default coordinates (ya har listing ke liye real coordinates)
+      coordinates: [0, 0], 
     },
   }));
 

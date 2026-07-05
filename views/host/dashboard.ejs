@@ -1,356 +1,1310 @@
 <%- layout("layouts/boilerplate") %>
-
+<link rel="stylesheet" href="/CSS/hostDashboard.css">
 <div class="host-dashboard">
 
-  <div class="dashboard-header">
-    <div>
-      <h1>Host Dashboard</h1>
-      <p>Manage your listings and bookings</p>
+    <!-- =========================
+         DASHBOARD HEADER
+    ========================== -->
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <span class="dashboard-badge">
+                🏠 Host Panel
+            </span>
+
+            <h1>
+                Welcome back,
+                <%= currUser.username %> 👋
+            </h1>
+
+            <p>
+                Manage your listings, bookings and revenue from one place.
+            </p>
+
+        </div>
+
+        <div>
+
+            <a href="/listings/new" class="dashboard-btn">
+
+                + Add Listing
+
+            </a>
+
+        </div>
+
     </div>
 
-    <a href="/listings/new" class="dashboard-btn">
-      + Add Listing
-    </a>
-  </div>
 
-  <!-- Stats -->
-  <div class="stats-grid">
 
-    <div class="stat-card">
-      <h2><%= totalListings %></h2>
-      <p>Total Listings</p>
+    <!-- =========================
+         KPI CARDS
+    ========================== -->
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                💰
+            </div>
+
+            <div>
+
+                <h2>
+                    ₹<%= revenue.toLocaleString("en-IN") %>
+                </h2>
+
+                <p>Total Revenue</p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📅
+            </div>
+
+            <div>
+
+                <h2>
+                    <%= totalBookings %>
+                </h2>
+
+                <p>Total Bookings</p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🏡
+            </div>
+
+            <div>
+
+                <h2>
+                    <%= totalListings %>
+                </h2>
+
+                <p>Active Listings</p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📈
+            </div>
+
+            <div>
+
+                <h2>
+                    <%= conversionRate %>%
+                </h2>
+
+                <p>Conversion Rate</p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ❌
+            </div>
+
+            <div>
+
+                <h2>
+                    <%= cancelledBookings %>
+                </h2>
+
+                <p>Cancelled</p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🔔
+            </div>
+
+            <div>
+
+                <h2>
+                    <%= notifications.length %>
+                </h2>
+
+                <p>Notifications</p>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="stat-card">
-      <h2><%= totalBookings %></h2>
-      <p>Total Bookings</p>
+
+
+    <!-- =========================
+         CHART SECTION
+    ========================== -->
+
+    <div class="charts-grid">
+
+        <!-- Revenue -->
+
+        <div class="chart-card">
+
+            <div class="chart-header">
+
+                <h3>
+                    📈 Revenue Trend
+                </h3>
+
+                <span>
+                    Last 6 Months
+                </span>
+
+            </div>
+
+            <canvas id="revenueChart"></canvas>
+
+        </div>
+
+
+
+        <!-- Bookings -->
+
+        <div class="chart-card">
+
+            <div class="chart-header">
+
+                <h3>
+                    📊 Booking Status
+                </h3>
+
+                <span>
+                    Overview
+                </span>
+
+            </div>
+
+            <canvas id="bookingChart"></canvas>
+
+        </div>
+
     </div>
 
-    <div class="stat-card">
-      <h2>₹<%= revenue %></h2>
-      <p>Total Revenue</p>
+
+
+    <!-- =========================
+         QUICK ACTIONS
+    ========================== -->
+
+    <div class="quick-actions">
+
+        <a href="/listings/new" class="action-card">
+
+            <div class="action-icon">
+                ➕
+            </div>
+
+            <h4>Add Listing</h4>
+
+            <p>Create a new property</p>
+
+        </a>
+
+
+
+        <a href="/listings" class="action-card">
+
+            <div class="action-icon">
+                🏡
+            </div>
+
+            <h4>Manage Listings</h4>
+
+            <p>Edit your properties</p>
+
+        </a>
+
+
+
+        <a href="/host/bookings" class="action-card">
+
+            <div class="action-icon">
+                📅
+            </div>
+
+            <h4>Bookings</h4>
+
+            <p>View reservations</p>
+
+        </a>
+
+
+
+        <a href="/host/export/csv" class="action-card">
+
+            <div class="action-icon">
+                📥
+            </div>
+
+            <h4>Export Report</h4>
+
+            <p>Download revenue report</p>
+
+        </a>
+
     </div>
+ 
+<!-- ===================================
+        BOOKING CALENDAR
+=================================== -->
 
-    <div class="stat-card">
-      <h2>92%</h2>
-      <p>Occupancy</p>
-    </div>
-
-  </div>
-
-  <!-- Charts -->
-  <div class="charts-grid">
-
-    <div class="chart-card">
-      <h3>Revenue Trend</h3>
-      <canvas id="revenueChart"></canvas>
-    </div>
-
-    <div class="chart-card">
-      <h3>Bookings Trend</h3>
-      <canvas id="bookingChart"></canvas>
-    </div>
-
-  </div>
-
-  <!-- Listings -->
-  <div class="dashboard-section">
-    <h3>Your Listings</h3>
-
-    <table class="listing-table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Price</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% listings.forEach(listing => { %>
-          <tr>
-            <td><%= listing.title %></td>
-            <td>₹<%= listing.price %></td>
-            <td>Active</td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
-
-  </div>
-  <!-- Calendar + Block Dates -->
 <div class="dashboard-section mt-4">
 
-  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="section-header">
 
-    <h3>📅 Calendar Booking View</h3>
+        <h2>📅 Booking Calendar</h2>
 
-    <button
-      class="dashboard-btn"
-      data-bs-toggle="modal"
-      data-bs-target="#blockDateModal"
-    >
-      🚫 Block Dates
-    </button>
+        <button
+            class="dashboard-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#blockDateModal">
 
-  </div>
+            🚫 Block Dates
 
-  <div id="calendar"></div>
+        </button>
+
+    </div>
+
+    <div class="calendar-card">
+
+        <div id="calendar"></div>
+
+    </div>
 
 </div>
 
-<!-- Block Date Modal -->
+
+<!-- ===================================
+        BLOCK DATE MODAL
+=================================== -->
+
 <div
-  class="modal fade"
-  id="blockDateModal"
-  tabindex="-1"
->
+    class="modal fade"
+    id="blockDateModal"
+    tabindex="-1"
+    aria-hidden="true">
 
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    🚫 Block Dates
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Select Listing
+
+                    </label>
+
+                    <select
+                        id="listingSelect"
+                        class="form-select">
+
+                        <% listings.forEach(listing=>{ %>
+
+                        <option value="<%= listing._id %>">
+
+                            <%= listing.title %>
+
+                        </option>
+
+                        <% }) %>
+
+                    </select>
+
+                </div>
+
+                <div class="alert alert-info">
+
+                    📅 Select dates directly on the calendar to block them.
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    Close
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ✅ MOVE MODAL HERE (OUTSIDE ALL SECTIONS) -->
+
+<div class="modal fade" id="blockDateModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
-
     <div class="modal-content">
 
       <div class="modal-header">
-        <h5 class="modal-title">
-          Block Dates
-        </h5>
-
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
+        <h5 class="modal-title">Block Dates</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body">
+        <p>Select dates to block</p>
+        <select id="listingSelect">
+  <% listings.forEach(listing => { %>
+    <option value="<%= listing._id %>">
+      <%= listing.title %>
+    </option>
+  <% }) %>
+</select>
+       
 
-        <form
-          action="/host/block-date"
-          method="POST"
-        >
+    <button type="submit" class="btn btn-danger mt-2">
+      Block Dates
+    </button>
 
-          <label class="mb-2">
-            Select Listing
-          </label>
 
-          <select
-            name="listingId"
-            class="form-control mb-3"
-            required
-          >
 
-            <% listings.forEach(listing => { %>
+      </div>
 
-              <option value="<%= listing._id %>">
-                <%= listing.title %>
-              </option>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================
+        REVENUE + BOOKINGS
+=================================== -->
+
+<div class="dashboard-row mt-4">
+
+    <!-- Revenue Per Listing -->
+
+    <div class="dashboard-card">
+
+        <div class="card-header">
+
+            <h3>
+                💰 Revenue Per Listing
+            </h3>
+
+        </div>
+
+        <table class="listing-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Listing</th>
+
+                    <th>Bookings</th>
+
+                    <th>Revenue</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <% listings.forEach(listing=>{ %>
+
+                    <tr>
+
+                        <td>
+
+                            <strong>
+
+                                <%= listing.title %>
+
+                            </strong>
+
+                        </td>
+
+                        <td>
+
+                            <%= listingRevenue[listing._id]?.bookings || 0 %>
+
+                        </td>
+
+                        <td>
+
+                            ₹<%= listingRevenue[listing._id]?.revenue || 0 %>
+
+                        </td>
+
+                    </tr>
+
+                <% }) %>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+
+    <!-- Latest Bookings -->
+
+    <div class="dashboard-card">
+
+        <div class="card-header">
+
+            <h3>
+
+                🛏 Latest Bookings
+
+            </h3>
+
+        </div>
+
+        <% if(totalBookings>0){ %>
+
+        <table class="listing-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Listing</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <% listings.slice(0,5).forEach(listing=>{ %>
+
+                    <tr>
+
+                        <td>
+
+                            <%= listing.title %>
+
+                        </td>
+
+                        <td>
+
+                            <span class="badge bg-success">
+
+                                Active
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                <% }) %>
+
+            </tbody>
+
+        </table>
+
+        <% } else { %>
+
+            <div class="empty-card">
+
+                <i class="fa-solid fa-calendar-xmark"></i>
+
+                <p>
+
+                    No bookings yet.
+
+                </p>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+
+<!-- ===================================
+            HOST LISTINGS
+=================================== -->
+
+<div class="dashboard-section mt-4">
+
+    <div class="card-header">
+
+        <h2>
+
+            🏡 Your Listings
+
+        </h2>
+
+    </div>
+
+    <table class="listing-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Listing</th>
+
+                <th>Price</th>
+
+                <th>Status</th>
+
+                <th>Views</th>
+
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <% listings.forEach(listing=>{ %>
+
+            <tr>
+
+                <td>
+
+                    <%= listing.title %>
+
+                </td>
+
+                <td>
+
+                    ₹<%= listing.price %>
+
+                </td>
+
+                <td>
+
+                    <span class="badge bg-success">
+
+                        Active
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <%= listing.views || 0 %>
+
+                </td>
+
+                <td>
+
+                    <a
+
+                        href="/listings/<%= listing._id %>/edit"
+
+                        class="btn btn-sm btn-dark">
+
+                        Edit
+
+                    </a>
+
+                </td>
+
+            </tr>
 
             <% }) %>
 
-          </select>
+        </tbody>
 
-          <label class="mb-2">
-            Select Date
-          </label>
+    </table>
 
-          <input
-            type="date"
-            name="date"
-            class="form-control mb-3"
-            required
-          >
+</div>
 
-          <button
-            type="submit"
-            class="dashboard-btn w-100"
-          >
-            Save Block Date
-          </button>
 
-        </form>
 
-      </div>
+<!-- ===================================
+            NOTIFICATIONS
+=================================== -->
+
+<div class="dashboard-section mt-4">
+
+    <div class="card-header">
+
+        <h2>
+
+            🔔 Recent Notifications
+
+        </h2>
 
     </div>
 
-  </div>
+    <% if(notifications.length){ %>
+
+        <% notifications.forEach(notification=>{ %>
+
+            <div class="notification-card">
+
+                <div>
+
+                    🔔
+
+                </div>
+
+                <div>
+
+                    <%= notification.message %>
+
+                </div>
+
+            </div>
+
+        <% }) %>
+
+    <% } else { %>
+
+        <div class="empty-card">
+
+            <i class="fa-solid fa-bell-slash"></i>
+
+            <p>
+
+                No notifications available.
+
+            </p>
+
+        </div>
+
+    <% } %>
 
 </div>
-<!-- Revenue Per Listing -->
-<div class="dashboard-section mt-4">
-  <h3>📈 Revenue Per Listing</h3>
+<!-- ===================================
+            SMART SUGGESTIONS + PRICING
+=================================== -->
 
-  <table class="listing-table">
-    <thead>
-      <tr>
-        <th>Listing</th>
-        <th>Bookings</th>
-        <th>Revenue</th>
-      </tr>
-    </thead>
+<div class="dashboard-row mt-4">
 
-    <tbody>
-      <% listings.forEach(listing => { %>
-        <tr>
-          <td><%= listing.title %></td>
-          <td><%= listingRevenue[listing._id]?.bookings || 0 %></td>
-          <td>₹<%= listingRevenue[listing._id]?.revenue || 0 %></td>
-        </tr>
-      <% }) %>
-    </tbody>
-  </table>
-</div>
+    <div class="dashboard-card">
 
-<!-- Analytics Row -->
-<div class="stats-grid mt-4">
+        <div class="card-header">
+            <h3>💡 Smart Suggestions</h3>
+        </div>
 
-  <div class="stat-card">
-    <h2><%= conversionRate %>%</h2>
-    <p>📊 Conversion Rate</p>
-  </div>
+        <div class="ai-item">
+            <span>📈</span>
+            <div>
+                Weekend demand is increasing.
+                <strong>Increase prices by 12%</strong>
+            </div>
+        </div>
 
-  <div class="stat-card">
-    <h2><%= cancelledBookings %></h2>
-    <p>❌ Cancelled Bookings</p>
-  </div>
+        <div class="ai-item">
+            <span>🔥</span>
+            <div>
+                <strong>
+                    <%= listings[0]?.title || "Listing" %>
+                </strong>
+                is currently trending.
+            </div>
+        </div>
 
-  <div class="stat-card">
-    <h2><%= notifications.length %></h2>
-    <p>🔔 Notifications</p>
-  </div>
+        <div class="ai-item">
+            <span>⭐</span>
+            <div>
+                Guests prefer stays having
+                <strong>4+ photos.</strong>
+            </div>
+        </div>
 
-  <div class="stat-card">
-    <h2>+12%</h2>
-    <p>🤖 AI Pricing Boost</p>
-  </div>
+        <div class="ai-item">
+            <span>💰</span>
+            <div>
+                Expected revenue increase:
+                <strong>+18%</strong>
+            </div>
+        </div>
 
-</div>
-
-<!-- Notifications -->
-<div class="dashboard-section mt-4">
-  <h3>🔔 Notifications</h3>
-
-  <% if(notifications.length > 0){ %>
-
-    <% notifications.forEach(notification => { %>
-
-      <div class="notification-item">
-        <%= notification.message %>
-      </div>
-
-    <% }) %>
-
-  <% } else { %>
-
-    <div class="notification-item">
-      No notifications yet
     </div>
 
-  <% } %>
 
-</div>
 
-<div class="dashboard-section mt-4">
-  <h3>🗺️ Location Unlock Status</h3>
+    <!-- ============================
+          PRICING SUGGESTION
+    ============================= -->
 
-  <% listings.forEach(listing => { %>
+    <div class="dashboard-card">
 
-    <div class="location-card mb-2">
-      <strong><%= listing.title %></strong><br>
+        <div class="card-header">
+            <h3>💎 AI Pricing</h3>
+        </div>
 
-      <% if(listingRevenue[listing._id]?.bookings > 0) { %>
-        ✅ Location unlocked for booked guests
-      <% } else { %>
-        🔒 No confirmed bookings yet
-      <% } %>
+        <% if(listings.length){ %>
+
+        <div class="pricing-box">
+
+            <h2>
+                ₹<%= listings[0].price %>
+            </h2>
+
+            <small>Current Price</small>
+
+            <hr>
+
+            <h2 style="color:green">
+                ₹<%= Math.round(listings[0].price*1.12) %>
+            </h2>
+
+            <small>Suggested Price</small>
+
+            <p class="mt-3">
+
+                Estimated Revenue Boost
+
+                <strong style="color:green">
+                    +12%
+                </strong>
+
+            </p>
+
+        </div>
+
+        <% } %>
+
     </div>
 
-  <% }) %>
 </div>
 
-<!-- Export Revenue -->
+
+
+<!-- ===================================
+        TOP LISTINGS
+=================================== -->
+
 <div class="dashboard-section mt-4">
-  <h3>📥 Revenue Export</h3>
 
-  <button class="dashboard-btn">
-    Download CSV Report
-  </button>
+    <div class="card-header">
+
+        <h2>
+            🏆 Top Performing Listings
+        </h2>
+
+    </div>
+
+    <table class="listing-table">
+
+        <thead>
+
+            <tr>
+
+                <th>#</th>
+
+                <th>Listing</th>
+
+                <th>Revenue</th>
+
+                <th>Bookings</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        <% listings.forEach((listing,index)=>{ %>
+
+            <tr>
+
+                <td>
+
+                    <% if(index==0){ %>🥇<% } %>
+                    <% if(index==1){ %>🥈<% } %>
+                    <% if(index==2){ %>🥉<% } %>
+
+                    <% if(index>2){ %>
+
+                    <%= index+1 %>
+
+                    <% } %>
+
+                </td>
+
+                <td>
+
+                    <%= listing.title %>
+
+                </td>
+
+                <td>
+
+                    ₹<%= listingRevenue[listing._id]?.revenue || 0 %>
+
+                </td>
+
+                <td>
+
+                    <%= listingRevenue[listing._id]?.bookings || 0 %>
+
+                </td>
+
+            </tr>
+
+        <% }) %>
+
+        </tbody>
+
+    </table>
+
 </div>
 
-<!-- AI Pricing -->
+
+
+<!-- ===================================
+        GUEST REVIEWS
+=================================== -->
+
 <div class="dashboard-section mt-4">
-  <h3>🤖 AI Pricing Suggestions</h3>
 
-  <div class="pricing-card">
-    <p>
-      Current Price: ₹<%= listings[0]?.price || 0 %>
-    </p>
+    <div class="card-header">
 
-    <p>
-      Suggested Price: ₹2500
-    </p>
+        <h2>
+            ⭐ Recent Reviews
+        </h2>
 
-    <p>
-      Expected Revenue Increase: +15%
-    </p>
-  </div>
+    </div>
+
+    <div class="review-grid">
+
+        <div class="review-card">
+
+            <h4>★★★★★</h4>
+
+            <p>
+
+                Amazing stay.
+
+                Everything was clean.
+
+            </p>
+
+            <small>
+
+                — John
+
+            </small>
+
+        </div>
+
+
+
+        <div class="review-card">
+
+            <h4>★★★★★</h4>
+
+            <p>
+
+                Beautiful location.
+
+                Highly recommended.
+
+            </p>
+
+            <small>
+
+                — Sarah
+
+            </small>
+
+        </div>
+
+
+
+        <div class="review-card">
+
+            <h4>★★★★☆</h4>
+
+            <p>
+
+                Nice experience.
+
+                Will visit again.
+
+            </p>
+
+            <small>
+
+                — Alex
+
+            </small>
+
+        </div>
+
+    </div>
+
 </div>
+
+
+
+<!-- ===================================
+        EXPORT REPORT
+=================================== -->
+
+<div class="dashboard-section mt-4">
+
+    <div class="card-header">
+
+        <h2>
+
+            📥 Export Reports
+
+        </h2>
+
+    </div>
+
+    <div class="export-buttons">
+
+        <a href="/host/export/csv"
+           class="dashboard-btn">
+
+            CSV
+
+        </a>
+
+        <a href="/host/export/pdf"
+           class="dashboard-btn">
+
+            PDF
+
+        </a>
+
+        <a href="/host/export/excel"
+           class="dashboard-btn">
+
+            Excel
+
+        </a>
+
+    </div>
+
+</div>
+<!-- Recent Bookings -->
+
+<div class="dashboard-section mt-4">
+
+    <div class="section-header">
+        <h3>🛎 Recent Bookings</h3>
+    </div>
+
+    <% if(recentBookings.length){ %>
+
+    <table class="listing-table">
+
+        <thead>
+
+            <tr>
+                <th>Guest</th>
+                <th>Listing</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        <% recentBookings.forEach(b=>{ %>
+
+            <tr>
+
+                <td>
+                    <%= b.user?.username || "Guest" %>
+                </td>
+
+                <td>
+                    <%= b.listing?.title %>
+                </td>
+
+                <td>
+                    <%= new Date(b.checkIn).toLocaleDateString("en-IN") %>
+                </td>
+
+                <td>
+                    <%= new Date(b.checkOut).toLocaleDateString("en-IN") %>
+                </td>
+
+                <td>
+                    ₹<%= b.amount %>
+                </td>
+
+                <td>
+
+                    <% if(b.status==="confirmed"){ %>
+
+                        <span class="badge bg-success">
+                            Confirmed
+                        </span>
+
+                    <% } else { %>
+
+                        <span class="badge bg-danger">
+                            Cancelled
+                        </span>
+
+                    <% } %>
+
+                </td>
+
+            </tr>
+
+        <% }) %>
+
+        </tbody>
+
+    </table>
+
+    <% } else { %>
+
+        <div class="empty-card">
+            No bookings yet.
+        </div>
+
+    <% } %>
+
+</div>
+<!-- =========================
+AI Insights
+========================== -->
+
+<div class="dashboard-section mt-4">
+
+    <div class="card-header">
+        <h3>
+            🤖 AI Insights
+        </h3>
+    </div>
+
+    <div class="ai-grid">
+
+        <!-- Best Listing -->
+
+        <div class="ai-card success">
+
+            <h4>
+                🔥 Top Performing Listing
+            </h4>
+
+            <% 
+            let best = null;
+
+            listings.forEach(l=>{
+
+                if(
+                    !best ||
+                    (listingRevenue[l._id]?.revenue || 0)
+                    >
+                    (listingRevenue[best._id]?.revenue || 0)
+                ){
+                    best=l;
+                }
+
+            });
+            %>
+
+            <% if(best){ %>
+
+                <strong>
+                    <%= best.title %>
+                </strong>
+
+                <p>
+
+                    Revenue :
+                    ₹<%= listingRevenue[best._id]?.revenue || 0 %>
+
+                </p>
+
+            <% } %>
+
+        </div>
+
+        <!-- Lowest -->
+
+        <div class="ai-card warning">
+
+            <h4>
+                ⚠ Needs Improvement
+            </h4>
+
+            <%
+
+            let lowest=null;
+
+            listings.forEach(l=>{
+
+                if(
+                    !lowest ||
+                    (listingRevenue[l._id]?.revenue || 0)
+                    <
+                    (listingRevenue[lowest._id]?.revenue || 0)
+                ){
+                    lowest=l;
+                }
+
+            });
+
+            %>
+
+            <% if(lowest){ %>
+
+            <strong>
+
+                <%= lowest.title %>
+
+            </strong>
+
+            <p>
+
+                Revenue :
+                ₹<%= listingRevenue[lowest._id]?.revenue || 0 %>
+
+            </p>
+
+            <% } %>
+
+        </div>
+
+        <!-- AI Recommendation -->
+
+        <div class="ai-card">
+
+            <h4>
+                🤖 Recommendation
+            </h4>
+
+            <ul>
+
+                <li>
+                    Increase weekend price by 10%
+                </li>
+
+                <li>
+                    Add more photos
+                </li>
+
+                <li>
+                    Reply reviews quickly
+                </li>
+
+                <li>
+                    Enable Instant Booking
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- Occupancy -->
+
+        <div class="ai-card info">
+
+            <h4>
+
+                📈 Occupancy
+
+            </h4>
+
+            <h2>
+
+                92%
+
+            </h2>
+
+            <small>
+
+                Better than last month
+
+            </small>
+
+        </div>
+
+    </div>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link
-rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css">
 
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 <script>
-new Chart(document.getElementById("revenueChart"), {
-  type: "line",
-  data: {
-    labels: ["Jan","Feb","Mar","Apr","May","Jun"],
-    datasets: [{
-      label: "Revenue",
-      data: [10000,15000,22000,18000,27000,35000]
-    }]
-  }
-});
-
-new Chart(document.getElementById("bookingChart"), {
-  type: "bar",
-  data: {
-    labels: ["Jan","Feb","Mar","Apr","May","Jun"],
-    datasets: [{
-      label: "Bookings",
-      data: [2,4,6,5,8,10]
-    }]
-  }
-});
-
-
-const events =
-<%- JSON.stringify(calendarEvents) %>;
-
-document.addEventListener("DOMContentLoaded", function () {
-
-  const calendarEl =
-    document.getElementById("calendar");
-
-  const calendar =
-    new FullCalendar.Calendar(calendarEl, {
-
-      initialView: "dayGridMonth",
-
-      height: 700,
-
-      events: events
-
-    });
-
-  calendar.render();
-
-});
-
-
+window.dashboardData = {
+    chartLabels: <%- JSON.stringify(chartLabels) %>,
+    revenueChart: <%- JSON.stringify(revenueChart) %>,
+    bookingChart: <%- JSON.stringify(bookingChart) %>
+};
 </script>
 
+
+<link rel="stylesheet"
+href="https://unpkg.com/tippy.js@6/dist/tippy.css">
+
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+
+<script src="https://unpkg.com/tippy.js@6"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

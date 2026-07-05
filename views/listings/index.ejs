@@ -30,172 +30,264 @@
 <!-- ── FILTER CHIPS ── -->
 <div class="filter-scroll">
   
-  <div class="f-chip active">
-    <i class="fa fa-fire fc-icon"></i>
-    <span class="fc-lbl">Trending</span>
+  <div class="f-chip <%= !category || category === 'Trending' ? 'active' : '' %>">
+    <a href="/listings?category=Trending" class="f-chip">
+      <i class="fa fa-fire filter-icon"></i>
+      <span class="fc-lbl">Trending</span>
+    </a>
+  </div> 
+
+   
+
+  <div class="f-chip <%= category === 'Rooms' ? 'active' : '' %>">
+    <a href="/listings?category=Rooms" class="f-chip">
+      <i class="fa fa-bed filter-icon"></i>
+      <span class="fc-lbl">Rooms</span>
+    </a>
   </div>
 
-  <div class="f-chip">
-    <i class="fa fa-bed fc-icon"></i>
-    <span class="fc-lbl">Rooms</span>
+  <div class="f-chip <%= category === 'City' ? 'active' : '' %>">
+    <a href="/listings?category=City" class="f-chip">
+      <i class="fa fa-building filter-icon"></i>
+      <span class="fc-lbl">City</span>
+    </a>
   </div>
 
-  <div class="f-chip">
-    <i class="fa fa-city fc-icon"></i>
-    <span class="fc-lbl">City</span>
+  <div class="f-chip <%= category === 'Mountains' ? 'active' : '' %>">
+    <a href="/listings?category=Mountains" class="f-chip">
+      <i class="fa fa-mountain-sun filter-icon"></i>
+      <span class="fc-lbl">Mountains</span>
+    </a>
   </div>
 
-  <div class="f-chip">
-    <i class="fa fa-mountain fc-icon"></i>
-    <span class="fc-lbl">Mountains</span>
+  <div class="f-chip <%= category === 'Nature' ? 'active' : '' %>">
+    <a href="/listings?category=Nature" class="f-chip">
+      <i class="fa fa-tree  filter-icon"></i>
+      <span class="fc-lbl">Nature</span>
+    </a>
   </div>
 
-  <div class="f-chip">
-    <i class="fa fa-tree fc-icon"></i>
-    <span class="fc-lbl">Nature</span>
+  <div class="f-chip <%= category === 'Beach' ? 'active' : '' %>">
+    <a href="/listings?category=Beach" class="f-chip">
+      <i class="fa fa-umbrella-beach filter-icon"></i>
+      <span class="fc-lbl">Beach</span>
+    </a>
   </div>
 
-  <div class="f-chip">
-    <i class="fa fa-umbrella-beach fc-icon"></i>
-    <span class="fc-lbl">Beach</span>
+  <div class="f-chip <%= category === 'Camping' ? 'active' : '' %>">
+    <a href="/listings?category=Camping" class="f-chip">
+      <i class="fa fa-campground filter-icon"></i>
+      <span class="fc-lbl">Camping</span>
+    </a>
   </div>
 
-  <div class="f-chip">
-    <i class="fa fa-campground fc-icon"></i>
-    <span class="fc-lbl">Camping</span>
+  <div class="f-chip <%= category === 'Homes' ? 'active' : '' %>">
+    <a href="/listings?category=Homes" class="f-chip">
+      <i class="fa fa-home filter-icon"></i>
+      <span class="fc-lbl">Homes</span>
+    </a>
   </div>
 
-  <div class="f-chip">
-    <i class="fa fa-home fc-icon"></i>
-    <span class="fc-lbl">Homes</span>
+  <div class="f-chip <%= category === 'Arctic' ? 'active' : '' %>">
+    <a href="/listings?category=Arctic" class="f-chip">
+      <i class="fa fa-snowflake  filter-icon"></i>
+      <span class="fc-lbl">Arctic</span>
+    </a>
   </div>
 
-  <div class="f-chip">
-    <i class="fa fa-snowflake fc-icon"></i>
-    <span class="fc-lbl">Arctic</span>
+  <div class="f-chip <%= category === 'Farms' ? 'active' : '' %>">
+    <a href="/listings?category=Farms" class="f-chip">
+      <i class="fa fa-tractor  filter-icon"></i>
+      <span class="fc-lbl">Farms</span>
+    </a>
   </div>
-
-  <div class="f-chip">
-    <i class="fa fa-tractor fc-icon"></i>
-    <span class="fc-lbl">Farms</span>
+  <div class="f-chip <%= category === 'Skiing' ? 'active' : '' %>">
+    <a href="/listings?category=Skiing" class="f-chip">
+      <i class="fa fa-person-skiing  filter-icon"></i>
+      <span class="fc-lbl">Skiing</span>
+    </a>
   </div>
 
 </div>
 
-<!-- ── HERO STRIP (first 3 listings) ── -->
-<% if(allListings.length >= 3) { %>
+<% if(!category && allListings.length >= 3){ %>
+
 <div class="hero-strip">
 
-  <!-- Main featured card — first listing -->
-  <a href="/listings/<%= allListings[0]._id %>" class="hero-main" style="text-decoration:none;">
-    <div class="hero-bg-text">WL</div>
-    <% if(allListings[0].image && allListings[0].image.url) { %>
-      <img
-        src="<%= allListings[0].image.url %>"
-        alt="<%= allListings[0].title %>"
-        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.45;"
-      />
-    <% } %>
-    <div style="position:relative;z-index:1;">
-      <div class="hero-tag">✦ Editor's pick</div>
-      <div class="hero-title"><%= allListings[0].title %></div>
-      <div class="hero-sub">
-        <i class="ti ti-map-pin" style="font-size:12px;"></i>
-        <%= allListings[0].location %>, <%= allListings[0].country %>
-      </div>
-      <div class="hero-price">
-        <strong>&#8377;<%= allListings[0].price.toLocaleString("en-IN") %></strong>
-        <span>/ night</span>
-      </div>
-    </div>
-  </a>
+    <!-- LEFT HERO -->
 
-  <!-- Side cards — 2nd and 3rd listings -->
-  <div class="hero-side">
-    <a href="/listings/<%= allListings[1]._id %>" class="side-top" style="text-decoration:none;position:relative; overflow:hidden;">
-      <% if(allListings[1].image && allListings[1].image.url) { %>
+    <a href="/listings/<%= allListings[0]._id %>" class="hero-main">
+
         <img
-          src="<%= allListings[1].image.url %>"
-          alt="<%= allListings[1].title %>"
-          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.3;"
-        />
-      <% } %>
-      <div style="position:relative;z-index:2;">
-      <div class="side-tag">Trending</div>
-      <div class="side-title"><%= allListings[1].title %></div>
-      <div class="side-price">
-        &#8377;<%= allListings[1].price.toLocaleString("en-IN") %> / night
-      </div>
-      </div>
+            src="<%= allListings[0].image.url %>"
+            alt="<%= allListings[0].title %>">
+
+        <div class="hero-bg-text">
+            WL
+        </div>
+
+        <div>
+
+            <div class="hero-tag">
+                ⭐ Editor's Pick
+            </div>
+
+            <div class="hero-title">
+                <%= allListings[0].title %>
+            </div>
+
+            <div class="hero-sub">
+                📍
+                <%= allListings[0].location %>,
+                <%= allListings[0].country %>
+            </div>
+
+            <div class="hero-rating">
+                ⭐ 4.9 • 128 Reviews
+            </div>
+
+            <div class="hero-price">
+                ₹<%= allListings[0].price.toLocaleString("en-IN") %> / night
+            </div>
+
+        </div>
+
     </a>
 
-    <a href="/listings/<%= allListings[2]._id %>" class="side-bottom" style="text-decoration:none;position:relative; overflow:hidden;">
-      <div class="side-tag">Unique stay</div>
-      <div class="side-title"><%= allListings[2].title %></div>
-      <div class="side-price">
-        &#8377;<%= allListings[2].price.toLocaleString("en-IN") %> / night
-      </div>
-    </a>
-  </div>
+    <!-- RIGHT -->
+
+    <div class="hero-side">
+
+        <a href="/listings/<%= allListings[1]._id %>" class="side-top">
+
+            <img
+                src="<%= allListings[1].image.url %>"
+                class="side-img"
+                alt="<%= allListings[1].title %>">
+
+            <div class="side-overlay">
+
+                <div class="side-tag">
+                    🔥 Trending
+                </div>
+
+                <div class="side-title">
+                    <%= allListings[1].title %>
+                </div>
+
+                <div class="side-price">
+                    ₹<%= allListings[1].price.toLocaleString("en-IN") %>/night
+                </div>
+
+            </div>
+
+        </a>
+
+        <a href="/listings/<%= allListings[2]._id %>" class="side-bottom">
+
+            <img
+                src="<%= allListings[2].image.url %>"
+                class="side-img"
+                alt="<%= allListings[2].title %>">
+
+            <div class="side-overlay">
+
+                <div class="side-tag">
+                    ❤️ Guest Favourite
+                </div>
+
+                <div class="side-title">
+                    <%= allListings[2].title %>
+                </div>
+
+                <div class="side-price">
+                    ₹<%= allListings[2].price.toLocaleString("en-IN") %>/night
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
 
 </div>
+
 <% } %>
 
-<!-- ── ALL LISTINGS LIST ── -->
-<div class="section-hed">
-  <div class="hed-rule">
-    <span class="hed-title">All Listings</span>
-  </div>
-  <% if(currUser) { %>
-    <a href="/listings/new" class="hed-link">+ Add new →</a>
-  <% } %>
+<%
+const listingsToShow =
+  (!category && allListings.length >= 3)
+    ? allListings.slice(3)
+    : allListings;
+%>
+
+<section class="listings-section">
+
+<header class="listings-header">
+  <h2>All Listings</h2>
+</header>
+
+<ul class="listings-grid">
+
+<% for(let listing of listingsToShow){ %>
+
+<li class="ticket">
+
+<a href="/listings/<%= listing._id %>" class="ticket__photo">
+<img src="<%= listing.image.url %>">
+<span class="ticket__stamp" aria-label="Rated 4.8 out of 5">
+  <strong>4.8</strong>
+  <small>★ 124</small>
+</span>
+</a>
+
+<div class="ticket__perforation" aria-hidden="true"></div>
+
+<div class="ticket__stub">
+
+<div class="ticket__row">
+<a href="/listings/<%= listing._id %>" class="ticket__title">
+<%= listing.title %>
+</a>
+<form action="/wishlist/<%= listing._id %>" method="POST">
+  <button type="submit" aria-label="Save to wishlist" class="ticket__heart">
+    <i class="fa-regular fa-heart"></i>
+  </button>
+</form>
 </div>
 
-<div class="cards-grid">
-  <% for(let listing of allListings.slice(3)) { %>
-  <a href="/listings/<%= listing._id %>" class="listing-card">
+<address class="ticket__location">
+<%= listing.location %>, <%= listing.country %>
+</address>
 
-    <div class="card-img">
-      <img src="<%= listing.image.url %>" alt="<%= listing.title %>">
-      
-      <form action="/wishlist/<%= listing._id %>" method="POST">
+<div class="ticket__footer">
 
-      <button class="wishlist-btn">
-        <i class="fa-regular fa-heart"></i>
-      </button>
-      </form>
-
-      <div class="card-price">
-        ₹<%= listing.price.toLocaleString("en-IN") %>/night
-      </div>
-    </div>
-
-    <div class="card-body">
-      <h3><%= listing.title %></h3>
-
-      <p class="location">
-        📍 <%= listing.location %>, <%= listing.country %>
-      </p>
-
-      <div class="rating">
-        ⭐ 4.8 (124 Reviews)
-      </div>
-
-      <% if(currUser){ %>
-        <a href="/bookings/<%= listing._id %>" class="book-btn">
-          Book Now
-        </a>
-      <% } else { %>
-        <a href="/login" class="book-btn">
-          Login to Book
-        </a>
-      <% } %>  
-
-    </div>
-
-  </a>
-  <% } %>
+<div class="ticket__price">
+<span class="ticket__price-amount">₹<%= listing.price.toLocaleString("en-IN") %></span>
+<span class="ticket__price-unit">/night</span>
 </div>
+
+<% if(currUser){ %>
+<a href="/bookings/<%= listing._id %>" class="ticket__cta">
+Book
+</a>
+<% } else { %>
+<a href="/login" class="ticket__cta">
+Login
+</a>
+<% } %>
+
+</div>
+
+</div>
+
+</li>
+
+<% } %>
+
+</ul>
+
+</section>
 
 <!-- ── PULL QUOTE ── -->
 <div class="pullquote">

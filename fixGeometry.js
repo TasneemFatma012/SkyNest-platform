@@ -1,8 +1,3 @@
-// ============================================================
-//  fixGeometry.js  —  run once to fix all listing coordinates
-//  Usage:  node fixGeometry.js
-// ============================================================
-
 require("dotenv").config();
 
 const mongoose  = require("mongoose");
@@ -12,7 +7,6 @@ const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const mapToken = process.env.MAP_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mapToken });
 
-// ✅ Atlas URL (same as app.js — not local)
 const MONGO_URL = process.env.ATLASDB_URL;
 
 if (!mapToken) {
@@ -26,22 +20,18 @@ if (!MONGO_URL) {
 }
 
 mongoose.connect(MONGO_URL)
-  .then(() => console.log("✅ DB connected —", MONGO_URL.split("@")[1])) // hide password
+  .then(() => console.log("✅ DB connected —", MONGO_URL.split("@")[1])) 
   .catch((err) => { console.error("DB error:", err); process.exit(1); });
 
 async function fixListings() {
-  // ✅ Catch ALL broken geometry cases:
-  //    1. geometry field missing entirely
-  //    2. coordinates array empty
-  //    3. coordinates is [0, 0]  ← your seed data problem
-  //    4. coordinates has null/NaN values
+
   const listings = await Listing.find({
     $or: [
       { geometry: { $exists: false } },
       { geometry: null },
       { "geometry.coordinates": { $exists: false } },
       { "geometry.coordinates": { $size: 0 } },
-      { "geometry.coordinates": [0, 0] },        // seed data default
+      { "geometry.coordinates": [0, 0] },       
     ]
   });
 
@@ -58,7 +48,7 @@ async function fixListings() {
 
   for (let listing of listings) {
     try {
-      // Build a better query: "location, country" gives more accurate results
+     
       const query = listing.location + ", " + listing.country;
 
       const response = await geocoder.forwardGeocode({

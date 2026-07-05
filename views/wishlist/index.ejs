@@ -1,57 +1,112 @@
 <%- layout("layouts/boilerplate") %>
 
-<div class="container mt-4">
+<!-- Hero Section -->
+<div class="wishlist-hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Your Wishlist</h1>
+    <p class="hero-subtitle">Save your favorite properties for later</p>
+  </div>
+</div>
 
-  <h2 class="mb-4">My Wishlist ❤️</h2>
+<!-- Main Container -->
+<div class="wishlist-wrapper">
+  
+  <!-- Header with Count -->
+  <div class="wishlist-header">
+    <div class="header-left">
+      <h2 class="section-title">Saved Listings</h2>
+      <div class="wishlist-stats">
+        <span class="stat-badge">
+          <span class="stat-icon">❤️</span>
+          <span class="stat-value"><%= items.length %></span>
+          <span class="stat-label"><%= items.length === 1 ? 'Item' : 'Items' %></span>
+        </span>
+      </div>
+    </div>
+  </div>
 
+  <!-- Empty State -->
   <% if(items.length === 0){ %>
-
-    <div class="alert alert-info">
-      No wishlist items found.
+    
+    <div class="empty-state">
+      <div class="empty-icon">💔</div>
+      <h3 class="empty-title">Your Wishlist is Empty</h3>
+      <p class="empty-message">Start saving your favorite listings! When you find a property you love, add it to your wishlist.</p>
+      <a href="/listings" class="empty-cta">Explore Listings</a>
     </div>
 
   <% } else { %>
 
-    <div class="row">
+    <!-- Wishlist Grid -->
+    <div class="wishlist-grid">
 
-      <% items.forEach(item => { %>
+      <% items.forEach((item, index) => { %>
 
-        <div class="col-md-4 mb-4">
+        <div class="wishlist-card" style="animation-delay: <%= index * 0.1 %>s">
 
-          <div class="card shadow-sm">
-
-            <img
-              src="<%= item.listing.image.url %>"
-              class="card-img-top"
-              style="height:220px;object-fit:cover;"
+          <!-- Card Image with Heart Badge -->
+          <div class="wishlist-image-wrapper">
+            <img 
+              src="<%= item.listing.image.url %>" 
+              alt="<%= item.listing.title %>" 
+              class="wishlist-image"
             >
+            <div class="heart-badge">
+              <span class="heart-icon">❤️</span>
+            </div>
+            <div class="wishlist-category">
+              <%= item.listing.category %>
+            </div>
+          </div>
 
-            <div class="card-body">
+          <!-- Card Content -->
+          <div class="wishlist-details">
 
-              <h5>
-                <%= item.listing.title %>
-              </h5>
-
-              <p>
-                📍 <%= item.listing.location %>,
-                <%= item.listing.country %>
+            <!-- Title & Location -->
+            <div class="wishlist-header-section">
+              <h3 class="wishlist-title"><%= item.listing.title %></h3>
+              <p class="wishlist-location">
+                📍 <%= item.listing.location %>, <%= item.listing.country %>
               </p>
+            </div>
 
-              <a
+            <!-- Price Section -->
+            <div class="price-section">
+              <div class="price-label">Starting from</div>
+              <div class="price-value">₹<%= item.listing.price.toLocaleString("en-IN") %><span class="price-night">/night</span></div>
+            </div>
+
+            <!-- Rating/Category Info -->
+            <div class="listing-meta">
+              <span class="meta-item">
+                <span class="meta-icon">⭐</span>
+                <span class="meta-text"><%= item.listing.category %></span>
+              </span>
+              <span class="meta-item">
+                <span class="meta-icon">🛏️</span>
+                <span class="meta-text">Available</span>
+              </span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="wishlist-actions">
+              <a 
                 href="/listings/<%= item.listing._id %>"
-                class="btn btn-dark"
+                class="action-btn btn-view"
               >
-                View Listing
+                <span class="btn-icon">👁️</span> View
               </a>
-
-
-            </div><form
-  action="/wishlist/<%= item._id %>?_method=DELETE"
-  method="POST">
-  <button class="cancel-btn">
-    Remove
-  </button>
-</form>
+              <form
+                action="/wishlist/<%= item._id %>?_method=DELETE"
+                method="POST"
+                class="wishlist-remove-form"
+                onsubmit="return confirm('Remove from wishlist?');"
+              >
+                <button type="submit" class="action-btn btn-remove">
+                  <span class="btn-icon">❌</span> Remove
+                </button>
+              </form>
+            </div>
 
           </div>
 

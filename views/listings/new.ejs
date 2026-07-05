@@ -90,6 +90,37 @@
           <div class="invalid-feedback">Country is required.</div>
         </div>
       </div>
+      <!-- Category -->
+<div class="mb-3">
+  <label class="form-label" for="category">
+    <i class="ti ti-category" style="vertical-align:middle;margin-right:4px;"></i>
+    Category
+  </label>
+
+  <select
+    id="category"
+    name="listing[category]"
+    class="form-select"
+    required
+  >
+    <option value="" selected disabled>Select Category</option>
+    <option value="Trending">🔥 Trending</option>
+    <option value="Rooms">🛏️ Rooms</option>
+    <option value="City">🏙️ City</option>
+    <option value="Mountains">⛰️ Mountains</option>
+    <option value="Nature">🌳 Nature</option>
+    <option value="Beach">🏖️ Beach</option>
+    <option value="Camping">🏕️ Camping</option>
+    <option value="Homes">🏠 Homes</option>
+    <option value="Arctic">❄️ Arctic</option>
+    <option value="Farms">🚜 Farms</option>
+    <option value="Skiing">⛷️ Skiing</option>
+  </select>
+
+  <div class="invalid-feedback">
+    Please select a category.
+  </div>
+</div>
 
       <!-- Location -->
       <div class="mb-4">

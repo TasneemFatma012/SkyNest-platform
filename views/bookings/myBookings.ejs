@@ -1,97 +1,162 @@
 <%- layout("layouts/boilerplate") %>
 
-<div class="container mt-4">
+<!-- Hero Section -->
+<div class="mybookings-hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Your Bookings</h1>
+    <p class="hero-subtitle">Manage and track all your reservations</p>
+  </div>
+</div>
 
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="my-bookings-title">My Bookings</h2>
-
-    <span class="booking-count">
-      <%= bookings.length %> Bookings
-    </span>
+<!-- Main Container -->
+<div class="mybookings-wrapper">
+  
+  <!-- Header with Count -->
+  <div class="mybookings-header">
+    <div class="header-left">
+      <h2 class="section-title">Your Trips</h2>
+      <div class="booking-stats">
+        <span class="stat-badge">
+          <span class="stat-icon">📅</span>
+          <span class="stat-value"><%= bookings.length %></span>
+          <span class="stat-label"><%= bookings.length === 1 ? 'Booking' : 'Bookings' %></span>
+        </span>
+      </div>
+    </div>
   </div>
 
+  <!-- Empty State -->
   <% if(bookings.length === 0){ %>
-
-    <div class="alert alert-light border">
-      No bookings found.
+    
+    <div class="empty-state">
+      <div class="empty-icon">✈️</div>
+      <h3 class="empty-title">No Bookings Yet</h3>
+      <p class="empty-message">Start your next adventure! Browse listings and book your perfect getaway.</p>
+      <a href="/listings" class="empty-cta">Explore Listings</a>
     </div>
 
   <% } else { %>
 
-    <div class="row g-4">
+    <!-- Bookings Grid -->
+    <div class="bookings-grid">
 
-      <% bookings.forEach(booking => { %>
+      <% bookings.forEach((booking, index) => { %>
+        
+        <%
+          const checkInDate = new Date(booking.checkIn);
+          const checkOutDate = new Date(booking.checkOut);
+          const today = new Date();
+          const isUpcoming = checkInDate > today;
+          const isOngoing = checkInDate <= today && checkOutDate > today;
+          const isCompleted = checkOutDate <= today;
+          const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
+        %>
 
-        <div class="col-md-4">
+        <div class="booking-card" style="animation-delay: <%= index * 0.1 %>s">
 
-          <div class="booking-card">
-
-            <img
-              src="<%= booking.listing.image.url %>"
-              class="booking-img"
-              alt="<%= booking.listing.title %>"
+          <!-- Card Image with Status -->
+          <div class="booking-image-wrapper">
+            <img 
+              src="<%= booking.listing.image.url %>" 
+              alt="<%= booking.listing.title %>" 
+              class="booking-image"
             >
+            <div class="status-badge <%= isOngoing ? 'status-ongoing' : isCompleted ? 'status-completed' : 'status-upcoming' %>">
+              <span class="status-dot"></span>
+              <% if(isOngoing) { %>
+                Ongoing
+              <% } else if(isCompleted) { %>
+                Completed
+              <% } else { %>
+                Upcoming
+              <% } %>
+            </div>
+          </div>
 
-            <div class="booking-content">
+          <!-- Card Content -->
+          <div class="booking-details">
 
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="booking-title">
-                  <%= booking.listing.title %>
-                </h5>
-
-                <span class="booking-status">
-                  Confirmed
-                </span>
-              </div>
-
+            <!-- Title & Location -->
+            <div class="booking-header-section">
+              <h3 class="booking-title"><%= booking.listing.title %></h3>
               <p class="booking-location">
-                📍 <%= booking.listing.location %>,
-                <%= booking.listing.country %>
+                📍 <%= booking.listing.location %>, <%= booking.listing.country %>
               </p>
+            </div>
 
-              <div class="booking-info">
-
-                <p>
-                  <strong>Check In:</strong>
-                  <%= booking.checkIn.toDateString() %>
-                </p>
-
-                <p>
-                  <strong>Check Out:</strong>
-                  <%= booking.checkOut.toDateString() %>
-                </p>
-
-                <p>
-                  <strong>Guests:</strong>
-                  <%= booking.guests %>
-                </p>
-                <p>
-                   <strong>Total:</strong>
-                   <% if(booking.totalPrice){ %>
-                   ₹<%= booking.totalPrice.toLocaleString("en-IN") %>
-                   <% } else { %>
-                     N/A
-                   <% } %>
-                 </p>
-
+            <!-- Timeline Info -->
+            <div class="booking-timeline">
+              <div class="timeline-item">
+                <div class="timeline-label">Check In</div>
+                <div class="timeline-value"><%= checkInDate.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' }) %></div>
               </div>
+              <div class="timeline-arrow">→</div>
+              <div class="timeline-item">
+                <div class="timeline-label">Check Out</div>
+                <div class="timeline-value"><%= checkOutDate.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' }) %></div>
+              </div>
+            </div>
 
+            <!-- Booking Info Grid -->
+            <div class="booking-info-grid">
+              <div class="info-item">
+                <span class="info-icon">👥</span>
+                <div>
+                  <div class="info-label">Guests</div>
+                  <div class="info-value"><%= booking.guests %></div>
+                </div>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">🏨</span>
+                <div>
+                  <div class="info-label">Nights</div>
+                  <div class="info-value"><%= nights %></div>
+                </div>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">💳</span>
+                <div>
+                  <div class="info-label">Total</div>
+                  <div class="info-value">₹<%= booking.amount.toLocaleString("en-IN") %></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Booking Reference -->
+            <div class="booking-reference-section">
+              <small class="reference-label">Booking ID:</small>
+              <code class="reference-code"><%= booking._id.toString().slice(-8).toUpperCase() %></code>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="booking-actions">
+              <a 
+                href="/bookings/<%= booking._id %>/confirmation" 
+                class="action-btn btn-primary"
+              >
+                <span class="btn-icon">📋</span> View Details
+              </a>
               <a
                 href="/listings/<%= booking.listing._id %>"
-                class="booking-btn text-center text-decoration-none d-block"
+                class="action-btn btn-secondary"
               >
-                View Listing
+                <span class="btn-icon">🏠</span> View Listing
               </a>
+            </div>
+
+            <!-- Cancel Button (only for upcoming bookings) -->
+            <% if(isUpcoming) { %>
               <form
                 action="/bookings/<%= booking._id %>?_method=DELETE"
                 method="POST"
-                >
-                <button class="cancel-btn">
-                   Cancel Booking
-               </button>
-            </form>
-
-            </div>
+                class="booking-cancel-form"
+                onsubmit="return confirm('Are you sure you want to cancel this booking?');"
+              >
+                <button class="action-btn btn-danger" type="submit">
+                  <span class="btn-icon">❌</span> Cancel Booking
+                </button>
+              </form>
+            <% } %>
 
           </div>
 
@@ -102,5 +167,3 @@
     </div>
 
   <% } %>
-
-</div>

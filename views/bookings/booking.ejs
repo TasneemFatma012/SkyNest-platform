@@ -1,134 +1,272 @@
 <%- layout("layouts/boilerplate") %>
 
-<div class="container mt-4">
-  
+<div class="booking-page">
 
-
-  <div class="row">
+  <div class="booking-page__grid">
 
     <!-- Listing Info -->
-    <div class="col-md-7">
-      <img
-        src="<%= listing.image.url %>"
-        class="img-fluid rounded"
-        alt="<%= listing.title %>"
-      >
+    <div class="listing-detail">
 
-      <h2 class="mt-3"><%= listing.title %></h2>
+      <div class="listing-detail__photo">
+        <img src="<%= listing.image.url %>" alt="<%= listing.title %>">
+      </div>
 
-      <p>
-        📍 <%= listing.location %>,
-        <%= listing.country %>
-      </p>
+      <h1 class="listing-detail__title">
+        <%= listing.title %>
+      </h1>
 
-      <h4>
-        ₹<%= listing.price.toLocaleString("en-IN") %>
-        <small>/night</small>
-      </h4>
-    </div>
+      <address class="listing-detail__location">
+        <%= listing.location %>, <%= listing.country %>
+      </address>
 
-    <!-- Booking Form -->
-    <div class="col-md-5">
+      <div class="listing-detail__price">
+        <span class="listing-detail__price-amount">
+          ₹<%= listing.price.toLocaleString("en-IN") %>
+        </span>
 
-      <div class="card shadow-sm p-4">
-
-        <h3 class="mb-3">Reserve Your Stay</h3>
-
-        <form action="/bookings/<%= listing._id %>" method="POST">
-
-          <div class="mb-3">
-            <label class="form-label">Check In</label>
-            <input
-              type="date"
-              name="checkIn"
-              class="form-control"
-              required
-            >
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Check Out</label>
-            <input
-              type="date"
-              name="checkOut"
-              class="form-control"
-              required
-            >
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Guests</label>
-            <input
-              type="number"
-              name="guests"
-              min="1"
-              value="1"
-              class="form-control"
-            >
-          </div>
-
-          <!-- <button type="submit" class="btn btn-danger w-100">
-            Reserve Now
-          </button> -->
-        <button type="button" id="pay-btn" class="btn btn-danger w-100">
-            Pay & Book
-          </button>
-
-        </form>
-
+        <span class="listing-detail__price-unit">
+          / night
+        </span>
       </div>
 
     </div>
 
+
+    <!-- Booking Form -->
+    <div class="boarding-pass">
+
+      <div class="boarding-pass__head">
+        <span class="boarding-pass__eyebrow">
+          Reservation
+        </span>
+
+        <h2 class="boarding-pass__title">
+          Reserve your stay
+        </h2>
+      </div>
+
+
+
+      <div class="boarding-pass__form">
+
+
+        <div class="boarding-pass__field-row">
+
+          <div class="boarding-pass__field">
+            <label class="boarding-pass__label">
+              Check in
+            </label>
+
+            <input 
+            type="date" 
+            id="checkIn"
+            class="boarding-pass__input"
+            required>
+          </div>
+
+
+
+          <div class="boarding-pass__field">
+
+            <label class="boarding-pass__label">
+              Check out
+            </label>
+
+            <input 
+            type="date" 
+            id="checkOut"
+            class="boarding-pass__input"
+            required>
+
+          </div>
+
+        </div>
+
+
+
+
+        <div class="boarding-pass__field">
+
+          <label class="boarding-pass__label">
+            Guests
+          </label>
+
+          <input 
+          type="number"
+          id="guests"
+          min="1"
+          value="1"
+          class="boarding-pass__input">
+
+        </div>
+
+
+
+
+        <div class="boarding-pass__perforation"></div>
+
+        <div class="boarding-pass__breakdown">
+          <div class="breakdown-row">
+            <span>₹<%= listing.price.toLocaleString("en-IN") %> × <span id="nights">0</span> night(s) × <span id="guestCount">1</span> guest(s)</span>
+            <strong id="nightsTotal">₹0</strong>
+          </div>
+          <div class="breakdown-divider"></div>
+          <div class="breakdown-total">
+            <span>Total due today</span>
+            <strong id="totalAmount">₹<%= listing.price.toLocaleString("en-IN") %></strong>
+          </div>
+        </div>
+
+
+
+        <button 
+        type="button" 
+        id="pay-btn"
+        class="boarding-pass__cta">
+
+          Pay & book
+
+        </button>
+
+
+      </div>
+
+
+    </div>
+
+
   </div>
 
 </div>
+
+
+
+
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <script>
-document.getElementById("pay-btn")
-.addEventListener("click", async () => {
+const pricePerNight = <%= listing.price %>;
 
-  const amount =
-    <%= listing.price %>;
+function calculateTotal() {
+  const checkIn = document.getElementById("checkIn").value;
+  const checkOut = document.getElementById("checkOut").value;
+  const guests = parseInt(document.getElementById("guests").value) || 1;
+  
+  if (!checkIn || !checkOut) return 0;
+  
+  const checkInDate = new Date(checkIn);
+  const checkOutDate = new Date(checkOut);
+  const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
+  
+  if (nights <= 0) return 0;
+  
+  const total = pricePerNight * nights * guests;
+  return { total, nights, guests };
+}
 
-  const response = await fetch(
-    "/payment/create-order",
-    {
+function updateDisplay() {
+  const result = calculateTotal();
+  if (result === 0) return;
+  
+  const { total, nights, guests } = result;
+  document.getElementById("nights").textContent = nights;
+  document.getElementById("guestCount").textContent = guests;
+  document.getElementById("nightsTotal").textContent = `₹${total.toLocaleString("en-IN")}`;
+  document.getElementById("totalAmount").textContent = `₹${total.toLocaleString("en-IN")}`;
+}
+
+// Update on input change
+document.getElementById("checkIn").addEventListener("change", updateDisplay);
+document.getElementById("checkOut").addEventListener("change", updateDisplay);
+document.getElementById("guests").addEventListener("change", updateDisplay);
+
+// Pay button logic
+document.getElementById("pay-btn").addEventListener("click", async() => {
+  const result = calculateTotal();
+  if (result === 0) {
+    alert("Please select valid dates");
+    return;
+  }
+  
+  const checkIn = document.getElementById("checkIn").value;
+  const checkOut = document.getElementById("checkOut").value;
+  const guests = document.getElementById("guests").value;
+  
+  if (!checkIn || !checkOut || !guests) {
+    alert("Please fill in all fields");
+    return;
+  }
+  
+  const { total } = result;
+  
+  try {
+    // CREATE ORDER
+    const response = await fetch("/payment/create-order", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        amount
+        amount: total,
+        listingId: "<%= listing._id %>"
       })
+    });
+    
+    if (!response.ok) {
+      throw new Error("Failed to create order");
     }
-  );
-
-  const order = await response.json();
-
-  const options = {
-    key: "<%= process.env.RAZORPAY_KEY_ID %>",
-    amount: order.amount,
-    currency: order.currency,
-    order_id: order.id,
-
-    name: "WanderLust",
-
-    handler: async function(response) {
-
-      console.log("PAYMENT SUCCESS");
-      console.log(response);
-
-      alert("Payment Successful");
-
-      const form = document.querySelector("form");
-      console.log(form);
-      form.submit();
-    }
-  };
-
-  const rzp = new Razorpay(options);
-
-  rzp.open();
+    
+    const order = await response.json();
+    
+    const options = {
+      key: "<%= process.env.RAZORPAY_KEY_ID %>",
+      amount: order.amount,
+      currency: order.currency,
+      order_id: order.id,
+      name: "WanderLust",
+      description: "<%= listing.title %>",
+      handler: async function(response) {
+        try {
+          // VERIFY PAYMENT
+          const verifyResponse = await fetch("/bookings/<%= listing._id %>", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              listingId: "<%= listing._id %>",
+              checkIn: checkIn,
+              checkOut: checkOut,
+              guests: parseInt(guests),
+              amount: total,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature
+            })
+          });
+          
+          const result = await verifyResponse.json();
+          
+          if(result.success) {
+            alert("Payment Successful 🎉");
+            window.location.href = result.redirectUrl;
+          } else {
+            alert("Payment verification failed: " + (result.message || "Unknown error"));
+            console.error("Verification failed:", result);
+          }
+        } catch(error) {
+          alert("Error processing payment: " + error.message);
+          console.error("Payment error:", error);
+        }
+      },
+      modal: {
+        ondismiss: function() {
+          alert("Payment cancelled");
+        }
+      }
+    };
+    
+    const rzp = new Razorpay(options);
+    rzp.open();
+  } catch(error) {
+    alert("Error: " + error.message);
+    console.error("Order creation error:", error);
+  }
 });
 </script>

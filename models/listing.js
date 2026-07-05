@@ -7,6 +7,24 @@ const listingSchema = new Schema({
     required: true,
   },
   description: String,
+  category: {
+    type: String,
+    enum: [
+      "Trending",
+      "Rooms",
+      "City",
+      "Mountains",
+      "Nature",
+      "Beach",
+      "Camping",
+      "Homes",
+      "Arctic",
+      "Farms",
+      "Skiing",
+    ],
+    default: "Trending",
+    required: true,
+  },
   image: {
     url: String,
     filename: String,
@@ -44,6 +62,10 @@ const listingSchema = new Schema({
      type: Date
    }
   ],
+  rating: {
+  type: Number,
+  default: 4.5
+},
  
 });
 

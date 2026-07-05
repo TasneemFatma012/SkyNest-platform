@@ -4,9 +4,27 @@ const mapToken = process.env.MAP_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mapToken });
 
 module.exports.index = async (req, res) => {
-  const allListings = await Listing.find({});
-  res.render("listings/index.ejs", { allListings });
-}
+  console.log(req.query);
+  const { category } = req.query;
+  const categories = await Listing.distinct("category");
+  console.log(categories);
+
+  let allListings;
+
+  if (category) {
+    allListings = await Listing.find({ category });
+    console.log("Category:", category);
+    console.log("Found:", allListings.length);
+  } else {
+    allListings = await Listing.find({});
+  }
+
+  res.render("listings/index.ejs", {
+    allListings,
+    category,
+    currUser: req.user,
+  });
+};
 
 // New Route
 module.exports.new = (req, res) => {
@@ -56,7 +74,7 @@ module.exports.create = async (req, res) => {
   newListing.owner = req.user._id;
   newListing.image = { url, filename };
 
-  // 🔥 GEO DATA SAVE
+ 
   newListing.geometry = response.body.features[0].geometry;
   console.log(response.body.features);
   await newListing.save();
@@ -72,7 +90,7 @@ module.exports.edit = async (req, res) => {
   if (!listing) {
     req.flash("error", "Listing not found");
     return res.redirect("/listings");
-    // throw new ExpressError(404, "Listing not found");
+    
   }
   let originalImageUrl = listing.image.url;
   originalImageUrl = originalImageUrl.replace("/upload/", "/upload/w_250/");
