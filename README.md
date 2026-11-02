@@ -6,6 +6,18 @@ SkyNest is a modern full-stack vacation rental and property booking platform tha
 
 Designed with a clean, responsive interface and built using modern web technologies, SkyNest delivers a seamless booking experience for guests and a comprehensive management dashboard for hosts.
 
+## 📸 Project Preview
+
+![SkyNest homepage preview](./assets/skynest-home.png)
+
+### Screenshots
+
+<div align="center">
+  <img src="./assets/skynest-home.png" alt="SkyNest homepage" width="48%" />
+  <img src="./assets/skynest-listings.png" alt="SkyNest listings" width="48%" />
+  <img src="./assets/skynest-login.png" alt="SkyNest login page" width="48%" />
+</div>
+
 ---
 
 # ✨ Features
