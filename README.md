@@ -2,9 +2,35 @@
 
 > **Book Smart. Stay Anywhere.**
 
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-5.x-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-7.x-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Project Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)](https://github.com/TasneemFatma012/SkyNest-platform)
+
 SkyNest is a modern full-stack vacation rental and property booking platform that connects travelers with unique accommodations while providing hosts with powerful tools to manage properties, bookings, revenue, and guest interactions.
 
 Designed with a clean, responsive interface and built using modern web technologies, SkyNest delivers a seamless booking experience for guests and a comprehensive management dashboard for hosts.
+
+## 📌 Overview
+
+- Guest-friendly property discovery and booking experience
+- Host dashboard for listings, bookings, revenue, and calendar management
+- Secure authentication and personalized booking flow
+- Real-time notifications, wishlist, reviews, and reporting
+
+## 🧭 How It Works
+
+1. Guests browse and filter vacation properties by location, category, and price.
+2. They book stays securely with availability checks and payment confirmation.
+3. Hosts manage listings, bookings, blocked dates, and revenue from one dashboard.
+4. Notifications, reviews, and export reports help improve the guest experience.
+
+## 🎯 Project Highlights
+
+- Full-stack property booking platform for short-term rentals
+- Role-based access for guests and hosts
+- Interactive dashboard with calendar and analytics
+- Payment, review, wishlist, and notification modules included
 
 ## 📸 Project Preview
 
@@ -13,9 +39,16 @@ Designed with a clean, responsive interface and built using modern web technolog
 ### Screenshots
 
 <div align="center">
-  <img src="./assets/skynest-home.png" alt="SkyNest homepage" width="48%" />
-  <img src="./assets/skynest-listings.png" alt="SkyNest listings" width="48%" />
-  <img src="./assets/skynest-login.png" alt="SkyNest login page" width="48%" />
+  <table>
+    <tr>
+      <td align="center"><img src="./assets/skynest-booking.png" alt="SkyNest booking page" width="420" /></td>
+      <td align="center"><img src="./assets/skynest-login.png" alt="SkyNest login page" width="420" /></td>
+    </tr>
+    <tr>
+      <td align="center"><img src="./assets/skynest-host-dashboard.png" alt="SkyNest host dashboard" width="420" /></td>
+      <td align="center"><img src="./assets/skynest-home.png" alt="SkyNest homepage" width="420" /></td>
+    </tr>
+  </table>
 </div>
 
 ---
@@ -165,7 +198,7 @@ SkyNest/
 
 ---
 
-# 🚀 Installation
+# 🚀 Quick Start
 
 Clone the repository:
 
@@ -173,19 +206,14 @@ Clone the repository:
 git clone https://github.com/TasneemFatma012/SkyNest-platform.git
 ```
 
-Navigate to the project:
+Navigate to the project and install dependencies:
 
 ```bash
 cd SkyNest
-```
-
-Install dependencies:
-
-```bash
 npm install
 ```
 
-Create a `.env` file and configure:
+Create a `.env` file and configure the required values:
 
 ```env
 ATLASDB_URL=your_mongodb_connection_string
@@ -197,19 +225,19 @@ CLOUD_API_KEY=your_cloudinary_api_key
 CLOUD_API_SECRET=your_cloudinary_api_secret
 ```
 
-Run the project:
+Run the app:
 
 ```bash
 npm start
 ```
 
-or
+Or in development mode:
 
 ```bash
-nodemon app.js
+npm run dev
 ```
 
-Open your browser:
+Open the app in your browser:
 
 ```text
 http://localhost:8080
