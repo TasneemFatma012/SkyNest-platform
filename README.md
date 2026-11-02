@@ -34,19 +34,21 @@ Designed with a clean, responsive interface and built using modern web technolog
 
 ## 📸 Project Preview
 
-![SkyNest homepage preview](./assets/skynest-home.png)
+<p align="center">
+  <img src="./assets/home.png" alt="SkyNest homepage preview" width="950" />
+</p>
 
 ### Screenshots
 
 <div align="center">
   <table>
     <tr>
-      <td align="center"><img src="./assets/skynest-home.png" alt="SkyNest homepage" width="420" /></td>
-      <td align="center"><img src="./assets/skynest-login.png" alt="SkyNest login page" width="420" /></td>
+      <td align="center"><img src="./assets/book.png" alt="SkyNest booking page" width="420" /></td>
+      <td align="center"><img src="./assets/booking-list.png" alt="SkyNest booking list" width="420" /></td>
     </tr>
     <tr>
-      <td align="center"><img src="./assets/skynest-booking.png" alt="SkyNest booking page" width="420" /></td>
-      <td align="center"><img src="./assets/skynest-host-dashboard.png" alt="SkyNest host dashboard" width="420" /></td>
+      <td align="center"><img src="./assets/confirm-booking.png" alt="SkyNest booking confirmation" width="420" /></td>
+      <td align="center"><img src="./assets/home.png" alt="SkyNest homepage" width="420" /></td>
     </tr>
   </table>
 </div>
